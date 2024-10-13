@@ -6,6 +6,7 @@ import org.hibernate.annotations.GenericGenerator;
 import java.time.LocalDateTime;
 
 @Entity
+@Table(name = "comments")
 public class CommentDTO {
 
     @Id

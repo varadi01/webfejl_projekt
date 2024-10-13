@@ -2,6 +2,7 @@ package hu.unideb.inf.redditclone.controller;
 
 import hu.unideb.inf.redditclone.entity.CommentDTO;
 import hu.unideb.inf.redditclone.service.CommentService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,13 +18,13 @@ public class CommentController {
     }
 
     @GetMapping("/{postId}")
-    public List<CommentDTO> getCommentsUnderPost(@PathVariable Long postId) {
-        return commentService.getAllCommentsUnderPost(postId);
+    public ResponseEntity<List<CommentDTO>> getCommentsUnderPost(@PathVariable Long postId) {
+        return ResponseEntity.ok().body(commentService.getAllCommentsUnderPost(postId));
     }
 
     @GetMapping("user/{userId}")
-    public List<CommentDTO> getCommentsByUser(@PathVariable Long userId) {
-        return commentService.getAllCommentsByAuthor(userId);
+    public ResponseEntity<List<CommentDTO>>  getCommentsByUser(@PathVariable Long userId) {
+        return ResponseEntity.ok().body(commentService.getAllCommentsByAuthor(userId));
     }
 
     //we might need to get by parent comment
@@ -35,32 +36,34 @@ public class CommentController {
     }
     */
 
-    @PutMapping("/{commentId}")
-    public CommentDTO updateComment(@PathVariable Long commentId, @RequestBody CommentDTO commentDTO) {
-        //TODO
-        return null;
-    }
-
-    @PutMapping("/{commentId}/{val}")
-    public CommentDTO updateCommentVotes(@PathVariable Long commentId, @PathVariable Integer val) {
-        //TODO
-        return null;
-    }
-
     //MAYBE, or do one normal one with data in json from the start (might be more logical we'll see)
     @PostMapping("/{postId}")
-    public CommentDTO createComment(@PathVariable Long postId, @RequestBody CommentDTO commentDTO) {
+    public ResponseEntity<CommentDTO>  createComment(@PathVariable Long postId, @RequestBody CommentDTO commentDTO) {
         CommentDTO comment = commentDTO;
         comment.setPostId(postId);
-        return commentService.createComment(comment);
+        return ResponseEntity.ok().body(commentService.createComment(comment));
     }
 
+    //stup again
     @PostMapping("/{postId}/{parentId}")
-    public CommentDTO createCommentWithParent(@PathVariable Long postId, @PathVariable Long parentId, @RequestBody CommentDTO commentDTO) {
+    public ResponseEntity<CommentDTO>  createCommentWithParent(@PathVariable Long postId, @PathVariable Long parentId, @RequestBody CommentDTO commentDTO) {
         CommentDTO comment = commentDTO;
         comment.setPostId(postId);
         comment.setParentCommentId(parentId);
-        return commentService.createComment(comment);
+        return ResponseEntity.ok().body(commentService.createComment(comment));
+    }
+
+
+
+
+    @PutMapping("/{commentId}")
+    public ResponseEntity<CommentDTO> updateComment(@PathVariable Long commentId, @RequestBody String body) {
+        return ResponseEntity.ok().body(commentService.updateCommentBody(commentId, body));
+    }
+
+    @PutMapping("/vote/{commentId}")
+    public ResponseEntity<CommentDTO> updateCommentVotes(@PathVariable Long commentId, @RequestBody Integer val) {
+        return ResponseEntity.ok().body(commentService.updateCommentVotes(commentId, val));
     }
 
 }

@@ -1,6 +1,7 @@
 package hu.unideb.inf.redditclone.service;
 
 import hu.unideb.inf.redditclone.entity.CommunityDTO;
+import hu.unideb.inf.redditclone.entity.PostDTO;
 import hu.unideb.inf.redditclone.repository.CommunityRepo;
 import org.springframework.stereotype.Service;
 
@@ -35,4 +36,19 @@ public class CommunityService {
     //getting joined comms by user
 
     //getting top comms etc
+
+
+    //updating subs
+    //only owner can do these
+
+    //PROBABLY
+    public CommunityDTO updateCommunityDescription(Long id, String description) {
+        Optional<CommunityDTO> comm = communityRepository.findById(id);
+        if (comm.isPresent()) {
+            CommunityDTO communityDTO = comm.get();
+            communityDTO.setDescription(description);
+            return communityRepository.save(communityDTO);
+        }
+        return null;
+    }
 }

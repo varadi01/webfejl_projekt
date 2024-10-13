@@ -40,4 +40,14 @@ public class UserService {
     public List<UserDTO> getAllUsers() {
         return userRepository.findAll();
     }
+
+    public UserDTO updateUserDisplayName(Long userId, String newDisplayName){
+        Optional<UserDTO> user = userRepository.findById(userId);
+        if (user.isPresent()) {
+            UserDTO userDTO = user.get();
+            userDTO.setDisplayName(newDisplayName);
+            return userRepository.save(userDTO);
+        }
+        return null;
+    }
 }

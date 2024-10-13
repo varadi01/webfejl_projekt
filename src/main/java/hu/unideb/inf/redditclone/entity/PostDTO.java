@@ -6,6 +6,7 @@ import org.hibernate.annotations.GenericGenerator;
 import java.time.LocalDateTime;
 
 @Entity
+@Table(name = "posts")
 public class PostDTO {
 
     @Id
@@ -15,7 +16,7 @@ public class PostDTO {
     private Long id;
     @Column(nullable = false)
     private String title;
-    private String body;
+    private String body; //this might have to be a raw?
     private LocalDateTime createdAt;
     @Column(nullable = false)
     private Long authorId;

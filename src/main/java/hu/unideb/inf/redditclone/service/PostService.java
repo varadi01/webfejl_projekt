@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PostService {
@@ -35,5 +36,26 @@ public class PostService {
         return postRepository.findAllByAuthorId(userId);
     }
 
+    public PostDTO updatePostBody(Long postId, String body) {
+        Optional<PostDTO> optionalPostDTO = postRepository.findById(postId);
+        if (optionalPostDTO.isPresent()) {
+            PostDTO postDTO = optionalPostDTO.get();
+            postDTO.setBody(body);
+            postDTO.setEdited(true);
+            return postRepository.save(postDTO);
+        }
+        return null;
+    }
 
+    //voting
+
+    public PostDTO updatePostVotes(Long postId, int vote) {
+        Optional<PostDTO> optionalPostDTO = postRepository.findById(postId);
+        if (optionalPostDTO.isPresent()) {
+            PostDTO postDTO = optionalPostDTO.get();
+            postDTO.setVotes(postDTO.getVotes() + vote);
+            return postRepository.save(postDTO);
+        }
+        return null;
+    }
 }

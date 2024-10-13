@@ -34,4 +34,10 @@ public class UserController {
         //check for uniquness
         return ResponseEntity.ok().body(userService.createUser(userDTO));
     }
+
+    //PROBABLY
+    @PutMapping("/namech/{userId}")
+    public ResponseEntity<UserDTO> updateUserDisplayName(@PathVariable Long userId, @RequestBody String displayName) {
+        return ResponseEntity.ok().body(userService.updateUserDisplayName(userId, displayName));
+    }
 }

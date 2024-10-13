@@ -1,10 +1,12 @@
 package hu.unideb.inf.redditclone.service;
 
 import hu.unideb.inf.redditclone.entity.CommentDTO;
+import hu.unideb.inf.redditclone.entity.PostDTO;
 import hu.unideb.inf.redditclone.repository.CommentRepo;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CommentService {
@@ -36,5 +38,25 @@ public class CommentService {
         return commentRepository.findAllByAuthorId(authorId);
     }
 
+    public CommentDTO updateCommentBody(Long id, String body) {
+        Optional<CommentDTO> commentDTO = commentRepository.findById(id);
+        if (commentDTO.isPresent()) {
+            CommentDTO commentDTO1 = commentDTO.get();
+            commentDTO1.setText(body);
+            return commentRepository.save(commentDTO1);
+        }
+        return null;
+    }
+
     //VOTING???
+    //should work
+    public CommentDTO updateCommentVotes(Long commentId, int vote) {
+        Optional<CommentDTO> optionalCommentDTO = commentRepository.findById(commentId);
+        if (optionalCommentDTO.isPresent()) {
+            CommentDTO commentDTO = optionalCommentDTO.get();
+            commentDTO.setVotes(commentDTO.getVotes() + vote);
+            return commentRepository.save(commentDTO);
+        }
+        return null;
+    }
 }
