@@ -27,6 +27,7 @@ public class UserDTO {
     public UserDTO(String username, String email) {
         this.username = username;
         this.email = email;
+        this.displayName = username; //username by default
     }
 
     public Long getId() {

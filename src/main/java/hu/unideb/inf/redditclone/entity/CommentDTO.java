@@ -33,6 +33,18 @@ public class CommentDTO {
         this.authorId = authorId;
         this.postId = postId;
         this.parentCommentId = parentCommentId;
+        this.createdAt = LocalDateTime.now();
+        this.votes = 1L;
+    }
+
+    //do i need this?
+    public CommentDTO(String text, Long authorId, Long postId) {
+        this.text = text;
+        this.authorId = authorId;
+        this.postId = postId;
+        this.parentCommentId = null;
+        this.createdAt = LocalDateTime.now();
+        this.votes = 1L;
     }
 
     public Long getId() {

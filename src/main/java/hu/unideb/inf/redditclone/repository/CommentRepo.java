@@ -16,4 +16,5 @@ public interface CommentRepo extends JpaRepository<CommentDTO, Long> {
     //List<CommentDTO> findFirst50ByVotesDesc();
 
     //lehetne findbyparentcommentid
+
 }

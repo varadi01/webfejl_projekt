@@ -1,9 +1,7 @@
 package hu.unideb.inf.redditclone.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+import org.hibernate.annotations.GenericGenerator;
 
 import java.time.LocalDateTime;
 
@@ -11,15 +9,20 @@ import java.time.LocalDateTime;
 public class PostDTO {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GenericGenerator(name = "post_seq_gen", strategy = "increment") //deprecated, but works for now
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "post_seq_gen")
+    @Column(name = "id", unique = true, nullable = false)
     private Long id;
+    @Column(nullable = false)
     private String title;
     private String body;
     private LocalDateTime createdAt;
+    @Column(nullable = false)
     private Long authorId;
+    @Column(nullable = false)
     private Long communityId;
     private Long votes;
-    public boolean edited = false;
+    private boolean edited = false;
 
     public PostDTO() {
     }
@@ -29,6 +32,8 @@ public class PostDTO {
         this.body = body;
         this.authorId = authorId;
         this.communityId = communityId;
+        this.createdAt = LocalDateTime.now();
+        this.votes = 1L;
     }
 
     public Long getId() {
@@ -85,5 +90,13 @@ public class PostDTO {
 
     public void setVotes(Long votes) {
         this.votes = votes;
+    }
+
+    public boolean isEdited() {
+        return edited;
+    }
+
+    public void setEdited(boolean edited) {
+        this.edited = edited;
     }
 }
