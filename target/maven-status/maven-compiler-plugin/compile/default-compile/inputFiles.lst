@@ -1,0 +1,11 @@
+/home/user/IdeaProjects/webfejl_projekt/src/main/java/hu/unideb/inf/redditclone/RedditcloneApplication.java
+/home/user/IdeaProjects/webfejl_projekt/src/main/java/hu/unideb/inf/redditclone/controller/UserController.java
+/home/user/IdeaProjects/webfejl_projekt/src/main/java/hu/unideb/inf/redditclone/entity/CommentDTO.java
+/home/user/IdeaProjects/webfejl_projekt/src/main/java/hu/unideb/inf/redditclone/entity/CommunityDTO.java
+/home/user/IdeaProjects/webfejl_projekt/src/main/java/hu/unideb/inf/redditclone/entity/PostDTO.java
+/home/user/IdeaProjects/webfejl_projekt/src/main/java/hu/unideb/inf/redditclone/entity/UserDTO.java
+/home/user/IdeaProjects/webfejl_projekt/src/main/java/hu/unideb/inf/redditclone/repository/CommentRepo.java
+/home/user/IdeaProjects/webfejl_projekt/src/main/java/hu/unideb/inf/redditclone/repository/CommunityRepo.java
+/home/user/IdeaProjects/webfejl_projekt/src/main/java/hu/unideb/inf/redditclone/repository/PostRepo.java
+/home/user/IdeaProjects/webfejl_projekt/src/main/java/hu/unideb/inf/redditclone/repository/UserRepo.java
+/home/user/IdeaProjects/webfejl_projekt/src/main/java/hu/unideb/inf/redditclone/service/UserService.java

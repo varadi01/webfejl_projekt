@@ -19,6 +19,7 @@ public class PostDTO {
     private Long authorId;
     private Long communityId;
     private Long votes;
+    public boolean edited = false;
 
     public PostDTO() {
     }

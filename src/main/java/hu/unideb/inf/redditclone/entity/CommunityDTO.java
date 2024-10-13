@@ -1,20 +1,21 @@
 package hu.unideb.inf.redditclone.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 public class CommunityDTO {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GenericGenerator(name = "community_seq_gen", strategy = "increment") //deprecated, but works for now
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "community_seq_gen")
+    @Column(name = "id", unique = true, nullable = false)
     private Long id;
     private Long ownerId;
+    @Column(unique = true, nullable = false)
     private String name;
     private String description;
-    //private Long numberOfMembers;
+    //private Long numberOfMembers; //eh
 
     //manyToMany with user (joined)
 

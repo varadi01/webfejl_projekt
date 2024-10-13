@@ -1,17 +1,25 @@
 package hu.unideb.inf.redditclone.entity;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.GenericGenerator;
 
 @Entity
+@Table(name = "users")
 public class UserDTO {
 
     //we havta do smth with joins here
 
+
+    //WORKS!!!
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GenericGenerator(name = "user_seq_gen", strategy = "increment") //deprecated, but works for now
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "user_seq_gen")
+    @Column(name = "id", unique = true, nullable = false)
     private Long id;
+    @Column(unique = true, nullable = false)
     private String username;
     private String email;
+    private String displayName;
 
     protected UserDTO() {
     }
@@ -44,5 +52,13 @@ public class UserDTO {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getDisplayName() {
+        return displayName;
+    }
+
+    public void setDisplayName(String displayName) {
+        this.displayName = displayName;
     }
 }
