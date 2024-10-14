@@ -3,6 +3,8 @@ package hu.unideb.inf.redditclone.entity;
 import jakarta.persistence.*;
 import org.hibernate.annotations.GenericGenerator;
 
+import java.util.Set;
+
 @Entity
 @Table(name = "communities")
 public class CommunityDTO {
@@ -12,6 +14,7 @@ public class CommunityDTO {
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "community_seq_gen")
     @Column(name = "id", unique = true, nullable = false)
     private Long id;
+
     private Long ownerId;
     @Column(unique = true, nullable = false)
     private String name;

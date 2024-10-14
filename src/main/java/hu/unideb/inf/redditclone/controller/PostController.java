@@ -28,25 +28,24 @@ public class PostController {
         return ResponseEntity.ok().body(postService.getAllPostsByUserId(userId));
     }
 
-
     //this stupid or nah?
-    @PostMapping("/{communityId}")
-    public ResponseEntity<PostDTO> createPost(@PathVariable Long communityId, @RequestBody PostDTO postDTO) {
-        //same thing here, either do this or fumble with json
-        PostDTO post = postDTO;
-        post.setCommunityId(communityId);
+    @PostMapping("/")
+    public ResponseEntity<PostDTO> createPost( @RequestBody PostDTO postDTO) {
+        //WORKS
+        PostDTO post = new PostDTO(postDTO.getTitle(), postDTO.getBody(), postDTO.getAuthorId() ,postDTO.getCommunityId());
         return ResponseEntity.ok().body(postService.createPost(post));
     }
 
-    @PutMapping("/{postId}")
+    //needs auth
+    @PutMapping("/{postId}") // requestbody gets parsed to a raw string
     public ResponseEntity<PostDTO> updatePost(@PathVariable Long postId, @RequestBody String body) {
         return ResponseEntity.ok().body(postService.updatePostBody(postId, body));
     }
 
-    //json with val: 1 or -1
+    //string with val: 1 or -1
     @PutMapping("/vote/{postId}")
-    public ResponseEntity<PostDTO> updatePostVotes(@PathVariable Long postId, @RequestBody Integer val) {
-        return ResponseEntity.ok().body(postService.updatePostVotes(postId, val));
+    public ResponseEntity<PostDTO> updatePostVotes(@PathVariable Long postId, @RequestBody String val) {
+        return ResponseEntity.ok().body(postService.updatePostVotes(postId, Integer.parseInt(val)));
     }
 
 }

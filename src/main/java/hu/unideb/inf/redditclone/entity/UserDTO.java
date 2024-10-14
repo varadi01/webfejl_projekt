@@ -3,6 +3,8 @@ package hu.unideb.inf.redditclone.entity;
 import jakarta.persistence.*;
 import org.hibernate.annotations.GenericGenerator;
 
+import java.util.Set;
+
 @Entity
 @Table(name = "users")
 public class UserDTO {
@@ -16,6 +18,7 @@ public class UserDTO {
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "user_seq_gen")
     @Column(name = "id", unique = true, nullable = false)
     private Long id;
+
     @Column(unique = true, nullable = false)
     private String username;
     private String email;

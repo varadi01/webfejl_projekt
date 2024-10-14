@@ -43,6 +43,7 @@ public class CommentService {
         if (commentDTO.isPresent()) {
             CommentDTO commentDTO1 = commentDTO.get();
             commentDTO1.setText(body);
+            commentDTO1.setEdited(true);
             return commentRepository.save(commentDTO1);
         }
         return null;

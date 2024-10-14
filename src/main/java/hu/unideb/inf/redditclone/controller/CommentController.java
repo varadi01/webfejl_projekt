@@ -37,24 +37,13 @@ public class CommentController {
     */
 
     //MAYBE, or do one normal one with data in json from the start (might be more logical we'll see)
-    @PostMapping("/{postId}")
-    public ResponseEntity<CommentDTO>  createComment(@PathVariable Long postId, @RequestBody CommentDTO commentDTO) {
-        CommentDTO comment = commentDTO;
-        comment.setPostId(postId);
+    @PostMapping("/")
+    public ResponseEntity<CommentDTO>  createComment(@RequestBody CommentDTO commentDTO) {
+        CommentDTO comment = new CommentDTO(
+                commentDTO.getText(), commentDTO.getAuthorId(),
+                commentDTO.getPostId(), commentDTO.getParentCommentId());
         return ResponseEntity.ok().body(commentService.createComment(comment));
     }
-
-    //stup again
-    @PostMapping("/{postId}/{parentId}")
-    public ResponseEntity<CommentDTO>  createCommentWithParent(@PathVariable Long postId, @PathVariable Long parentId, @RequestBody CommentDTO commentDTO) {
-        CommentDTO comment = commentDTO;
-        comment.setPostId(postId);
-        comment.setParentCommentId(parentId);
-        return ResponseEntity.ok().body(commentService.createComment(comment));
-    }
-
-
-
 
     @PutMapping("/{commentId}")
     public ResponseEntity<CommentDTO> updateComment(@PathVariable Long commentId, @RequestBody String body) {
@@ -62,8 +51,8 @@ public class CommentController {
     }
 
     @PutMapping("/vote/{commentId}")
-    public ResponseEntity<CommentDTO> updateCommentVotes(@PathVariable Long commentId, @RequestBody Integer val) {
-        return ResponseEntity.ok().body(commentService.updateCommentVotes(commentId, val));
+    public ResponseEntity<CommentDTO> updateCommentVotes(@PathVariable Long commentId, @RequestBody String val) {
+        return ResponseEntity.ok().body(commentService.updateCommentVotes(commentId, Integer.parseInt(val)));
     }
 
 }

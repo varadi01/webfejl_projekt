@@ -1,8 +1,6 @@
-hu/unideb/inf/redditclone/entity/UserDTO.class
 hu/unideb/inf/redditclone/entity/CommentDTO.class
 hu/unideb/inf/redditclone/controller/CommentController.class
 hu/unideb/inf/redditclone/repository/UserRepo.class
-hu/unideb/inf/redditclone/repository/CommentRepo.class
 hu/unideb/inf/redditclone/RedditcloneApplication.class
 hu/unideb/inf/redditclone/controller/PostController.class
 hu/unideb/inf/redditclone/controller/ComunityController.class
@@ -11,7 +9,13 @@ hu/unideb/inf/redditclone/repository/CommunityRepo.class
 hu/unideb/inf/redditclone/service/CommunityService.class
 hu/unideb/inf/redditclone/controller/UserController.class
 hu/unideb/inf/redditclone/service/CommentService.class
+hu/unideb/inf/redditclone/repository/PostRepo.class
+hu/unideb/inf/redditclone/entity/MemberDTO.class
+hu/unideb/inf/redditclone/entity/UserDTO.class
+hu/unideb/inf/redditclone/controller/MemberController.class
+hu/unideb/inf/redditclone/repository/CommentRepo.class
 hu/unideb/inf/redditclone/entity/PostDTO.class
 hu/unideb/inf/redditclone/entity/CommunityDTO.class
+hu/unideb/inf/redditclone/repository/MemberRepo.class
+hu/unideb/inf/redditclone/service/MemberService.class
 hu/unideb/inf/redditclone/service/PostService.class
-hu/unideb/inf/redditclone/repository/PostRepo.class
