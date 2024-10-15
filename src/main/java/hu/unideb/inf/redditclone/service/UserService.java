@@ -11,6 +11,7 @@ import java.util.Optional;
 public class UserService {
     //manages business logic
 
+    //ide jo az autowired
     private final UserRepo userRepository;
 
     public UserService(UserRepo userRepository) {
