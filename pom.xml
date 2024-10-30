@@ -62,6 +62,7 @@
 
 		<!-- https://mvnrepository.com/artifact/jakarta.faces/jakarta.faces-api
 		MIGHT NEED TO BE REMOVED-->
+		<!--
 		<dependency>
 			<groupId>jakarta.faces</groupId>
 			<artifactId>jakarta.faces-api</artifactId>
@@ -81,6 +82,7 @@
 			<version>2.4</version>
 			<scope>provided</scope>
 		</dependency>
+		-->
 
 	</dependencies>
 
@@ -92,6 +94,7 @@
 			</plugin>
 		</plugins>
 
+		<!-- might not need-->
 		<outputDirectory>src/main/webapp/WEB-INF/classes</outputDirectory>
 	</build>
 

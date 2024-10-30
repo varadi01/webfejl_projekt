@@ -4,16 +4,6 @@ package hu.unideb.inf.redditclone;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-
-import org.springframework.boot.web.servlet.FilterRegistrationBean;
-import org.springframework.boot.web.servlet.ServletRegistrationBean;
-import org.springframework.context.annotation.Bean;
-
-import jakarta.servlet.Servlet;
-import jakarta.faces.webapp.FacesServlet;
-import jakarta.servlet.DispatcherType;
-import java.util.EnumSet;
-
 @SpringBootApplication
 public class RedditcloneApplication {
 
