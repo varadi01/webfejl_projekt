@@ -20,6 +20,7 @@ public class ComunityController {
     }
 
     @GetMapping("/")
+    @CrossOrigin
     public ResponseEntity<List<CommunityDTO>> getAllCommunities(){
         return ResponseEntity.ok(communityService.getAllCommunities());
     }
