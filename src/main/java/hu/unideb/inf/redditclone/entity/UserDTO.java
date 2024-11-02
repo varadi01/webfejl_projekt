@@ -24,6 +24,9 @@ public class UserDTO {
     private String email;
     private String displayName;
 
+    @ManyToMany //TODO
+    private Set<CommunityDTO> joinedCommunities;
+
     protected UserDTO() {
     }
 

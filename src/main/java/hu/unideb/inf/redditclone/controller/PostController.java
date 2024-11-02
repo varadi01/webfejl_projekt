@@ -32,7 +32,7 @@ public class PostController {
     @PostMapping("/")
     public ResponseEntity<PostDTO> createPost( @RequestBody PostDTO postDTO) {
         //WORKS
-        PostDTO post = new PostDTO(postDTO.getTitle(), postDTO.getBody(), postDTO.getAuthorId() ,postDTO.getCommunityId());
+        PostDTO post = new PostDTO(postDTO.getTitle(), postDTO.getBody(), postDTO.getAuthor() ,postDTO.getCommunityId());
         return ResponseEntity.ok().body(postService.createPost(post));
     }
 

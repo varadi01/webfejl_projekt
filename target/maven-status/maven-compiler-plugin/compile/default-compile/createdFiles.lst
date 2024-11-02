@@ -13,7 +13,6 @@ hu/unideb/inf/redditclone/repository/PostRepo.class
 hu/unideb/inf/redditclone/entity/MemberDTO.class
 hu/unideb/inf/redditclone/entity/UserDTO.class
 hu/unideb/inf/redditclone/controller/MemberController.class
-hu/unideb/inf/redditclone/uicontroller/UiBaseController.class
 hu/unideb/inf/redditclone/repository/CommentRepo.class
 hu/unideb/inf/redditclone/entity/PostDTO.class
 hu/unideb/inf/redditclone/entity/CommunityDTO.class

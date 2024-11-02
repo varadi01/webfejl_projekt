@@ -15,7 +15,7 @@ import { DeferredContent } from 'primereact/deferredcontent'; //MUST USE
 import { Image } from 'primereact/image';
 import {Accordion, AccordionTab} from "primereact/accordion";
 import {Menu} from "primereact/menu";
-import React, {useRef} from "react";
+import React, {useRef, useState} from "react";
 import { DataScroller } from 'primereact/datascroller';
 import { Panel } from 'primereact/panel';
 
@@ -25,7 +25,7 @@ import {Card} from "primereact/card";
 import {TabPanel, TabView} from "primereact/tabview";
 
 function App() {
-  return Community()
+  return Sidebar()
 }
 
 function feedPage(){
@@ -160,22 +160,16 @@ function loginPage() {
 }
 
 function Sidebar(){
-    let topCommunitiesList = []
-    let yourCommunitiesList  = []
+    const [topCommunitiesList, setTopCommunitiesList] = useState([])
+    const  [yourCommunitiesList, setYourCommunitiesList] = useState([])
 
-    let communityListItems = []
+    const res = fetch("http://localhost:8080/community/cont/", {
+        method: "GET",
+    }).then(res => res.json()).then(data => setTopCommunitiesList(data
+        .map(com => <li key={com.id}><a href="http://localhost:8080/community/cont/">{com.name}</a></li>)))
 
-    /*
-    fetch("http://localhost:8080/community/cont/", {
-        credentials: "same-origin"
-    }).then((res) => topCommunitiesList= res.json()).then(
-        communityListItems = topCommunitiesList.map(item =>
-        <li key={item.id}>
-            {item.name}
-        </li>)
-    )
 
-     */
+
 
 
     return (
@@ -189,12 +183,14 @@ function Sidebar(){
             <Accordion multiple activeIndex={[0,1]}>
                 <AccordionTab header="Top Communities" >
                     <ul>
-                        {communityListItems}
+                        {topCommunitiesList}
                     </ul>
                 </AccordionTab>
                 <AccordionTab header="Your Communities">
                     <Button label="Create a community" icon="pi pi-plus" className="w-full"/>
-                    Your Comm
+                    <ul>
+                        {yourCommunitiesList}
+                    </ul>
                 </AccordionTab>
             </Accordion>
         </div >

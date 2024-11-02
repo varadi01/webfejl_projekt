@@ -18,8 +18,9 @@ public class PostDTO {
     private String title;
     private String body; //this might have to be a raw?
     private LocalDateTime createdAt;
-    @Column(nullable = false)
-    private Long authorId;
+    @ManyToOne
+    @JoinColumn(name = "author_id", referencedColumnName = "id") //may need to be camelcase
+    private UserDTO author;
     @Column(nullable = false)
     private Long communityId;
     private Long votes;
@@ -28,14 +29,15 @@ public class PostDTO {
     public PostDTO() {
     }
 
-    public PostDTO(String title, String body, Long authorId, Long communityId) {
+    public PostDTO(String title, String body, UserDTO author, Long communityId) {
         this.title = title;
         this.body = body;
-        this.authorId = authorId;
+        this.author = author;
         this.communityId = communityId;
         this.createdAt = LocalDateTime.now();
         this.votes = 1L;
     }
+
 
     public Long getId() {
         return id;
@@ -51,10 +53,6 @@ public class PostDTO {
 
     public LocalDateTime getCreatedAt() {
         return createdAt;
-    }
-
-    public Long getAuthorId() {
-        return authorId;
     }
 
     public Long getCommunityId() {
@@ -81,10 +79,6 @@ public class PostDTO {
         this.createdAt = createdAt;
     }
 
-    public void setAuthorId(Long authorId) {
-        this.authorId = authorId;
-    }
-
     public void setCommunityId(Long communityId) {
         this.communityId = communityId;
     }
@@ -99,5 +93,13 @@ public class PostDTO {
 
     public void setEdited(boolean edited) {
         this.edited = edited;
+    }
+
+    public UserDTO getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(UserDTO author) {
+        this.author = author;
     }
 }
