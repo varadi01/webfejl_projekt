@@ -13,5 +13,10 @@ public interface PostRepo extends JpaRepository<PostDTO, Long> {
 
     List<PostDTO> findAllByAuthorId(Long authorId);
 
+    //top
+    List<PostDTO>  findTopByOrderByVotes(); //TODO
+
     //List<PostDTO> findFirst50OrderByVotesDesc(); //smth
+
+    void deleteAllByCommunityId(Long communityId);
 }

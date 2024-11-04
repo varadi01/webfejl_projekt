@@ -13,8 +13,5 @@ public interface CommentRepo extends JpaRepository<CommentDTO, Long> {
 
     List<CommentDTO> findAllByAuthorId(Long authorId);
 
-    //List<CommentDTO> findFirst50ByVotesDesc();
-
-    //lehetne findbyparentcommentid
-
+    void deleteAllByPostId(Long postId);
 }

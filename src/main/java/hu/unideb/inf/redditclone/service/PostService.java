@@ -2,6 +2,7 @@ package hu.unideb.inf.redditclone.service;
 
 import hu.unideb.inf.redditclone.entity.PostDTO;
 import hu.unideb.inf.redditclone.repository.PostRepo;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
 
@@ -12,12 +13,15 @@ import java.util.Optional;
 public class PostService {
 
     private final PostRepo postRepository;
+    private final CommentService commentService;
 
-    public PostService(PostRepo postRepository) {
+    public PostService(PostRepo postRepository, CommentService commentService) {
         this.postRepository = postRepository;
+        this.commentService = commentService;
     }
 
     //get top posts recently?
+    //TODO
 
     //get posts by community, get a few at a time
 
@@ -34,6 +38,18 @@ public class PostService {
 
     public List<PostDTO> getAllPostsByUserId(Long userId) {
         return postRepository.findAllByAuthorId(userId);
+    }
+
+    //delete post
+    @Transactional //might not need
+    public void deletePost(Long postId) {
+        postRepository.deleteById(postId);
+        commentService.deleteCommentsUnderPost(postId);
+    }
+
+    @Transactional
+    public void deletePostsInCommunity(Long communityId) {
+        postRepository.deleteAllByCommunityId(communityId);
     }
 
     public PostDTO updatePostBody(Long postId, String body) {

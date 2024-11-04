@@ -31,8 +31,7 @@ public class PostController {
     //this stupid or nah?
     @PostMapping("/")
     public ResponseEntity<PostDTO> createPost( @RequestBody PostDTO postDTO) {
-        //WORKS
-        PostDTO post = new PostDTO(postDTO.getTitle(), postDTO.getBody(), postDTO.getAuthor() ,postDTO.getCommunityId());
+        PostDTO post = new PostDTO(postDTO.getTitle(), postDTO.getBody(), postDTO.getAuthor() ,postDTO.getCommunity());
         return ResponseEntity.ok().body(postService.createPost(post));
     }
 
@@ -48,4 +47,9 @@ public class PostController {
         return ResponseEntity.ok().body(postService.updatePostVotes(postId, Integer.parseInt(val)));
     }
 
+    @DeleteMapping("/del/{postId}")
+    public ResponseEntity<String> deletePost(@PathVariable Long postId) {
+        postService.deletePost(postId);
+        return ResponseEntity.ok().body("ok");
+    }
 }

@@ -3,6 +3,7 @@ package hu.unideb.inf.redditclone.service;
 import hu.unideb.inf.redditclone.entity.CommentDTO;
 import hu.unideb.inf.redditclone.entity.PostDTO;
 import hu.unideb.inf.redditclone.repository.CommentRepo;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,7 +23,12 @@ public class CommentService {
 
     //creation only under post, and parent comment... UH (handled)
     public CommentDTO createComment(CommentDTO commentDTO) {
-        return commentRepository.save(commentDTO);
+        if (commentDTO.getParentComment() == null){
+            CommentDTO cmt = new CommentDTO(commentDTO.getText(),commentDTO.getAuthor(),commentDTO.getPost());
+            return commentRepository.save(cmt);
+        }
+        CommentDTO cmt = new CommentDTO(commentDTO.getText(),commentDTO.getAuthor(),commentDTO.getPost(), commentDTO.getParentComment());
+        return commentRepository.save(cmt);
     }
 
     //editing, change flag
@@ -59,5 +65,10 @@ public class CommentService {
             return commentRepository.save(commentDTO);
         }
         return null;
+    }
+
+    @Transactional
+    public void deleteCommentsUnderPost(Long postId) {
+        commentRepository.deleteAllByPostId(postId);
     }
 }

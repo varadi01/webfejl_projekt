@@ -15,38 +15,41 @@ public class CommentDTO {
     @Column(name = "id", unique = true, nullable = false)
     private Long id;
     private String text;
-    @Column(nullable = false)
-    private Long authorId;
-    @Column(nullable = false)
-    private Long postId;
-    @Column(nullable = true)
-    private Long parentCommentId;
+    @ManyToOne
+    @JoinColumn(name = "author_id", referencedColumnName = "id")
+    private UserDTO author;
+    @OneToOne
+    @JoinColumn(name = "post_id", referencedColumnName = "id")
+    private PostDTO post;
+    @OneToOne
+    @JoinColumn(name = "parent_comment_id",referencedColumnName = "id")
+    private CommentDTO parentComment;
     private LocalDateTime createdAt;
     private Long votes;
     @Column(nullable = false)
     private boolean edited = false;
 
-    public CommentDTO() {
-    }
-
-    public CommentDTO(String text, Long authorId, Long postId, Long parentCommentId) {
+    //might need one without parent
+    public CommentDTO(String text, UserDTO author, PostDTO post, CommentDTO parentComment) {
         this.text = text;
-        this.authorId = authorId;
-        this.postId = postId;
-        this.parentCommentId = parentCommentId;
+        this.author = author;
+        this.post = post;
+        this.parentComment = parentComment;
         this.createdAt = LocalDateTime.now();
         this.votes = 1L;
     }
 
-    //do i need this?
-    public CommentDTO(String text, Long authorId, Long postId) {
+    public CommentDTO(String text, UserDTO author, PostDTO post) {
         this.text = text;
-        this.authorId = authorId;
-        this.postId = postId;
-        this.parentCommentId = null;
+        this.author = author;
+        this.post = post;
+        this.parentComment = null;
         this.createdAt = LocalDateTime.now();
         this.votes = 1L;
     }
+
+    public CommentDTO() {}
+
 
     public Long getId() {
         return id;
@@ -56,17 +59,6 @@ public class CommentDTO {
         return text;
     }
 
-    public Long getAuthorId() {
-        return authorId;
-    }
-
-    public Long getPostId() {
-        return postId;
-    }
-
-    public Long getParentCommentId() {
-        return parentCommentId;
-    }
 
     public LocalDateTime getCreatedAt() {
         return createdAt;
@@ -84,18 +76,6 @@ public class CommentDTO {
         this.text = text;
     }
 
-    public void setAuthorId(Long authorId) {
-        this.authorId = authorId;
-    }
-
-    public void setPostId(Long postId) {
-        this.postId = postId;
-    }
-
-    public void setParentCommentId(Long parentCommentId) {
-        this.parentCommentId = parentCommentId;
-    }
-
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
@@ -110,5 +90,29 @@ public class CommentDTO {
 
     public void setEdited(boolean edited) {
         this.edited = edited;
+    }
+
+    public CommentDTO getParentComment() {
+        return parentComment;
+    }
+
+    public void setParentComment(CommentDTO parentComment) {
+        this.parentComment = parentComment;
+    }
+
+    public PostDTO getPost() {
+        return post;
+    }
+
+    public void setPost(PostDTO post) {
+        this.post = post;
+    }
+
+    public UserDTO getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(UserDTO author) {
+        this.author = author;
     }
 }

@@ -1,7 +1,9 @@
 package hu.unideb.inf.redditclone.service;
 
+import hu.unideb.inf.redditclone.entity.CommunityDTO;
 import hu.unideb.inf.redditclone.entity.MemberDTO;
 import hu.unideb.inf.redditclone.repository.MemberRepo;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,16 +22,26 @@ public class MemberService {
         return memberRepository.save(memberDTO);
     }
 
-    public void leaveCommunity(Long id) {
-        //TODO
+    @Transactional
+    public void leaveCommunity(Long uid, Long cid) {
+        memberRepository.deleteByCommunityIdAndUserId(cid, uid);
     }
 
+    @Transactional
+    public void communityDeleted(Long cid){
+        //delete memberships made obsolete by deleting the community
+        memberRepository.deleteAllByCommunityId(cid);
+    }
+
+    public Integer getNumberOfMembers(Long id) {
+        return memberRepository.findMembersByCommunityId(id).toArray().length;
+    }
 
     public List<MemberDTO> getAllMembers(Long id) {
          return memberRepository.findMembersByCommunityId(id);
     }
 
-    public List<MemberDTO> getJoinedCommunities(Long id) {
-        return memberRepository.findMembersByUserId(id);
+    public List<CommunityDTO> getJoinedCommunities(Long id) {
+        return memberRepository.findMembersByUserId(id).stream().map(MemberDTO::getCommunity).toList();
     }
 }

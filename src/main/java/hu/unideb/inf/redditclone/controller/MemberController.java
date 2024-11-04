@@ -1,5 +1,6 @@
 package hu.unideb.inf.redditclone.controller;
 
+import hu.unideb.inf.redditclone.entity.CommunityDTO;
 import hu.unideb.inf.redditclone.entity.MemberDTO;
 import hu.unideb.inf.redditclone.service.MemberService;
 import org.springframework.http.ResponseEntity;
@@ -17,26 +18,31 @@ public class MemberController {
         this.memberService = memberService;
     }
 
-    //kifejezetten a memberek lehet nem kellenek, csak a szamuk
+    //weird
     @GetMapping("/com/{communityId}")
-    public ResponseEntity<List<Long>> getMembers(@PathVariable Long communityId) {
-        //IDKET AD VISSZA, LEHET JOBB HA OBJEKTMOT
-        List<MemberDTO> members = memberService.getAllMembers(communityId);
-        return ResponseEntity.ok().body(
-                members.stream().map(MemberDTO::getUserId).toList()
-        );
+    public ResponseEntity<Integer> getNumberOfMembers(@PathVariable Long communityId) {
+        return ResponseEntity.ok().body(memberService.getNumberOfMembers(communityId));
     }
 
     @GetMapping("user/{userId}")
-    public ResponseEntity<List<Long>> getJoinedCommunities(@PathVariable Long userId) {
-        List<MemberDTO> members = memberService.getJoinedCommunities(userId);
-        return ResponseEntity.ok().body(
-                members.stream().map(MemberDTO::getCommunityId).toList()
-        );
+    public ResponseEntity<List<CommunityDTO>> getJoinedCommunities(@PathVariable Long userId) {
+        return ResponseEntity.ok().body(memberService.getJoinedCommunities(userId));
     }
 
-    @PostMapping("/")
-    public ResponseEntity<MemberDTO> createMember(@RequestBody MemberDTO memberDTO) {
+    @PostMapping("join/")
+    public ResponseEntity<MemberDTO> joinCommunity(@RequestBody MemberDTO memberDTO) {
         return ResponseEntity.ok().body(memberService.joinCommunity(memberDTO));
+    }
+
+    @DeleteMapping("leave/")
+    public ResponseEntity<String> leaveCommunity(@RequestBody MemberDTO memberDTO) {
+        memberService.leaveCommunity(memberDTO.getUser().getId(), memberDTO.getCommunity().getId());
+        return ResponseEntity.ok().body("");
+    }
+
+    @DeleteMapping("delcom")
+    public ResponseEntity<String> deleteCommunity(@RequestBody Long communityId ) {
+        memberService.communityDeleted(communityId);
+        return ResponseEntity.ok().body("ok");
     }
 }

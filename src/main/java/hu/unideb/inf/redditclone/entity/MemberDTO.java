@@ -6,23 +6,25 @@ import org.hibernate.annotations.GenericGenerator;
 @Entity
 @Table(name = "members")
 public class MemberDTO {
-    //I'd rather not use joins so i handle community members with this
-
     @Id
     @GenericGenerator(name = "member_seq_gen", strategy = "increment") //deprecated, but works for now
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "member_seq_gen")
     @Column(name = "id", unique = true, nullable = false)
     private Long id;
 
-    private Long communityId;
-    private Long userId;
+    @ManyToOne
+    @JoinColumn(name = "community_id", referencedColumnName = "id")
+    private CommunityDTO community;
+    @ManyToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private UserDTO user;
 
     public MemberDTO() {
     }
 
-    public MemberDTO(Long communityId, Long userId) {
-        this.communityId = communityId;
-        this.userId = userId;
+    public MemberDTO(CommunityDTO community, UserDTO user) {
+        this.community = community;
+        this.user = user;
     }
 
     public Long getId() {
@@ -33,19 +35,20 @@ public class MemberDTO {
         this.id = id;
     }
 
-    public Long getCommunityId() {
-        return communityId;
+
+    public UserDTO getUser() {
+        return user;
     }
 
-    public void setCommunityId(Long communityId) {
-        this.communityId = communityId;
+    public void setUser(UserDTO user) {
+        this.user = user;
     }
 
-    public Long getUserId() {
-        return userId;
+    public CommunityDTO getCommunity() {
+        return community;
     }
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
+    public void setCommunity(CommunityDTO community) {
+        this.community = community;
     }
 }

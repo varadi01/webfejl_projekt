@@ -9,10 +9,6 @@ import java.util.Set;
 @Table(name = "users")
 public class UserDTO {
 
-    //we havta do smth with joins here
-
-
-    //WORKS!!!
     @Id
     @GenericGenerator(name = "user_seq_gen", strategy = "increment") //deprecated, but works for now
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "user_seq_gen")
@@ -23,9 +19,6 @@ public class UserDTO {
     private String username;
     private String email;
     private String displayName;
-
-    @ManyToMany //TODO
-    private Set<CommunityDTO> joinedCommunities;
 
     protected UserDTO() {
     }

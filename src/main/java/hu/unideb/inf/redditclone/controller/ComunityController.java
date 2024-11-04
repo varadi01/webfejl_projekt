@@ -38,11 +38,24 @@ public class ComunityController {
         return ResponseEntity.ok().body(communityService.createCommunity(communityDTO));
     }
 
+    /* //TODO TEST
+    @GetMapping("/top/{limit}")
+    public ResponseEntity<List<CommunityDTO>> getTopCommunities(@PathVariable int limit) {
+        return ResponseEntity.ok(communityService.getTopCommunities(limit));
+    }
+
+     */
 
     // i like this url passing stuff but this cant be secure..
     //why not just have the json contain this stuff
     @PutMapping("/{id}")
     public ResponseEntity<CommunityDTO> updateCommunityDescription(@PathVariable Long id, @RequestBody String description) {
         return ResponseEntity.ok().body(communityService.updateCommunityDescription(id, description));
+    }
+
+    @DeleteMapping("/delcom")
+    public ResponseEntity<String> deleteCommunity(@RequestBody Long id) {
+        communityService.deleteCommunityById(id);
+        return ResponseEntity.ok().body("OK");
     }
 }

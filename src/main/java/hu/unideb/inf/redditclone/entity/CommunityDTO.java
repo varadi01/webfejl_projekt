@@ -1,6 +1,7 @@
 package hu.unideb.inf.redditclone.entity;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.Formula;
 import org.hibernate.annotations.GenericGenerator;
 
 import java.util.Set;
@@ -15,19 +16,25 @@ public class CommunityDTO {
     @Column(name = "id", unique = true, nullable = false)
     private Long id;
 
-    private Long ownerId;
+    @OneToOne
+    @JoinColumn(name = "owner_id", referencedColumnName = "id")
+    private UserDTO owner;
+
     @Column(unique = true, nullable = false)
     private String name;
     private String description;
-    //private Long numberOfMembers; //eh
 
-    //manyToMany with user (joined)
+    /*
+    @Formula("(select count(community_id) from members m where m.community_id=id")
+    private Long numberOfMembers; //TODO TEST
+
+     */
 
     protected CommunityDTO() {
     }
 
-    public CommunityDTO(Long ownerId, String name, String description) {
-        this.ownerId = ownerId;
+    public CommunityDTO(UserDTO owner, String name, String description) {
+        this.owner = owner;
         this.name = name;
         this.description = description;
     }
@@ -36,9 +43,7 @@ public class CommunityDTO {
         return id;
     }
 
-    public Long getOwnerId() {
-        return ownerId;
-    }
+
 
     public String getName() {
         return name;
@@ -52,10 +57,6 @@ public class CommunityDTO {
         this.id = id;
     }
 
-    public void setOwnerId(Long ownerId) {
-        this.ownerId = ownerId;
-    }
-
     public void setName(String name) {
         this.name = name;
     }
@@ -63,4 +64,19 @@ public class CommunityDTO {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    public UserDTO getOwner() {
+        return owner;
+    }
+
+    public void setOwner(UserDTO owner) {
+        this.owner = owner;
+    }
+
+    /*
+    public Long getNumberOfMembers() {
+        return numberOfMembers;
+    }
+
+     */
 }

@@ -27,22 +27,9 @@ public class CommentController {
         return ResponseEntity.ok().body(commentService.getAllCommentsByAuthor(userId));
     }
 
-    //we might need to get by parent comment
-
-    /*
-    @PostMapping("/{postId}") // do two of these and not so much logic up or what
-    public CommentDTO createComment(@PathVariable Long postId, @RequestBody CommentDTO commentDTO) {
-        commentService.createComment(commentDTO);
-    }
-    */
-
-    //MAYBE, or do one normal one with data in json from the start (might be more logical we'll see)
     @PostMapping("/")
-    public ResponseEntity<CommentDTO>  createComment(@RequestBody CommentDTO commentDTO) {
-        CommentDTO comment = new CommentDTO(
-                commentDTO.getText(), commentDTO.getAuthorId(),
-                commentDTO.getPostId(), commentDTO.getParentCommentId());
-        return ResponseEntity.ok().body(commentService.createComment(comment));
+    public ResponseEntity<CommentDTO> createComment(@RequestBody CommentDTO commentDTO) {
+        return ResponseEntity.ok().body(commentService.createComment(commentDTO));
     }
 
     @PutMapping("/{commentId}")

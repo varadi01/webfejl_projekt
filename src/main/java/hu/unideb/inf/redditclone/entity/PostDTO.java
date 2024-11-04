@@ -21,19 +21,20 @@ public class PostDTO {
     @ManyToOne
     @JoinColumn(name = "author_id", referencedColumnName = "id") //may need to be camelcase
     private UserDTO author;
-    @Column(nullable = false)
-    private Long communityId;
+    @OneToOne
+    @JoinColumn(name = "community_id", referencedColumnName = "id")
+    private CommunityDTO community;
     private Long votes;
     private boolean edited = false;
 
     public PostDTO() {
     }
 
-    public PostDTO(String title, String body, UserDTO author, Long communityId) {
+    public PostDTO(String title, String body, UserDTO author, CommunityDTO community) {
         this.title = title;
         this.body = body;
         this.author = author;
-        this.communityId = communityId;
+        this.community = community;
         this.createdAt = LocalDateTime.now();
         this.votes = 1L;
     }
@@ -55,9 +56,7 @@ public class PostDTO {
         return createdAt;
     }
 
-    public Long getCommunityId() {
-        return communityId;
-    }
+
 
     public Long getVotes() {
         return votes;
@@ -79,9 +78,6 @@ public class PostDTO {
         this.createdAt = createdAt;
     }
 
-    public void setCommunityId(Long communityId) {
-        this.communityId = communityId;
-    }
 
     public void setVotes(Long votes) {
         this.votes = votes;
@@ -101,5 +97,13 @@ public class PostDTO {
 
     public void setAuthor(UserDTO author) {
         this.author = author;
+    }
+
+    public CommunityDTO getCommunity() {
+        return community;
+    }
+
+    public void setCommunity(CommunityDTO community) {
+        this.community = community;
     }
 }
