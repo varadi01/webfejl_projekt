@@ -24,11 +24,13 @@ public class CommunityDTO {
     private String name;
     private String description;
 
-    /*
-    @Formula("(select count(community_id) from members m where m.community_id=id")
+
+    //TODO
+    @Column(name = "number_of_members")
+    @Formula("(select count(m.community_id) from Members m where m.community_id = id)")
     private Long numberOfMembers; //TODO TEST
 
-     */
+
 
     protected CommunityDTO() {
     }

@@ -6,6 +6,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,6 +23,15 @@ public class PostService {
 
     //get top posts recently?
     //TODO
+    public List<PostDTO> getNewPosts() {
+        var lastWeek = LocalDateTime.now().minusWeeks(1);
+        return postRepository.findAllByCreatedAtAfterOrderByCreatedAt(lastWeek);
+    }
+
+    public List<PostDTO> getHotPosts(){
+        var lastWeek = LocalDateTime.now().minusWeeks(1);
+        return postRepository.findAllByCreatedAtAfterOrderByVotes(lastWeek);
+    }
 
     //get posts by community, get a few at a time
 

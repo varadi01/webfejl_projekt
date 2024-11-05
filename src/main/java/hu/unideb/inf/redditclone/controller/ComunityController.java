@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/community/cont")
+@RequestMapping("/community")
 public class ComunityController {
 
     private final CommunityService communityService;

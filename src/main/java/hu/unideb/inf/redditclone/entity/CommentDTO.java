@@ -21,6 +21,7 @@ public class CommentDTO {
     @OneToOne
     @JoinColumn(name = "post_id", referencedColumnName = "id")
     private PostDTO post;
+    //might wanna revert this to id simply
     @OneToOne
     @JoinColumn(name = "parent_comment_id",referencedColumnName = "id")
     private CommentDTO parentComment;

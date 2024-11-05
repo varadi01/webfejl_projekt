@@ -9,13 +9,23 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/post/cont")
+@RequestMapping("/post")
 public class PostController {
 
     private final PostService postService;
 
     public PostController(PostService postService) {
         this.postService = postService;
+    }
+
+    @GetMapping("/hot")
+    public ResponseEntity<List<PostDTO>> getHotPosts() {
+        return ResponseEntity.ok(postService.getHotPosts());
+    }
+
+    @GetMapping("/new")
+    public ResponseEntity<List<PostDTO>> getNewPosts() {
+        return ResponseEntity.ok(postService.getNewPosts());
     }
 
     @GetMapping("/{communityId}")
