@@ -4,11 +4,9 @@ import jakarta.persistence.*;
 import org.hibernate.annotations.Formula;
 import org.hibernate.annotations.GenericGenerator;
 
-import java.util.Set;
-
 @Entity
 @Table(name = "communities")
-public class CommunityDTO {
+public class CommunityEntity {
 
     @Id
     @GenericGenerator(name = "community_seq_gen", strategy = "increment") //deprecated, but works for now
@@ -18,7 +16,7 @@ public class CommunityDTO {
 
     @OneToOne
     @JoinColumn(name = "owner_id", referencedColumnName = "id")
-    private UserDTO owner;
+    private UserEntity owner;
 
     @Column(unique = true, nullable = false)
     private String name;
@@ -32,10 +30,10 @@ public class CommunityDTO {
 
 
 
-    protected CommunityDTO() {
+    protected CommunityEntity() {
     }
 
-    public CommunityDTO(UserDTO owner, String name, String description) {
+    public CommunityEntity(UserEntity owner, String name, String description) {
         this.owner = owner;
         this.name = name;
         this.description = description;
@@ -67,11 +65,11 @@ public class CommunityDTO {
         this.description = description;
     }
 
-    public UserDTO getOwner() {
+    public UserEntity getOwner() {
         return owner;
     }
 
-    public void setOwner(UserDTO owner) {
+    public void setOwner(UserEntity owner) {
         this.owner = owner;
     }
 

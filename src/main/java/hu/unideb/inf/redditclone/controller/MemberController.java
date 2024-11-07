@@ -1,7 +1,7 @@
 package hu.unideb.inf.redditclone.controller;
 
-import hu.unideb.inf.redditclone.entity.CommunityDTO;
-import hu.unideb.inf.redditclone.entity.MemberDTO;
+import hu.unideb.inf.redditclone.entity.CommunityEntity;
+import hu.unideb.inf.redditclone.entity.MemberEntity;
 import hu.unideb.inf.redditclone.service.MemberService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -25,18 +25,18 @@ public class MemberController {
     }
 
     @GetMapping("user/{userId}")
-    public ResponseEntity<List<CommunityDTO>> getJoinedCommunities(@PathVariable Long userId) {
+    public ResponseEntity<List<CommunityEntity>> getJoinedCommunities(@PathVariable Long userId) {
         return ResponseEntity.ok().body(memberService.getJoinedCommunities(userId));
     }
 
     @PostMapping("join/")
-    public ResponseEntity<MemberDTO> joinCommunity(@RequestBody MemberDTO memberDTO) {
-        return ResponseEntity.ok().body(memberService.joinCommunity(memberDTO));
+    public ResponseEntity<MemberEntity> joinCommunity(@RequestBody MemberEntity memberEntity) {
+        return ResponseEntity.ok().body(memberService.joinCommunity(memberEntity));
     }
 
     @DeleteMapping("leave/")
-    public ResponseEntity<String> leaveCommunity(@RequestBody MemberDTO memberDTO) {
-        memberService.leaveCommunity(memberDTO.getUser().getId(), memberDTO.getCommunity().getId());
+    public ResponseEntity<String> leaveCommunity(@RequestBody MemberEntity memberEntity) {
+        memberService.leaveCommunity(memberEntity.getUser().getId(), memberEntity.getCommunity().getId());
         return ResponseEntity.ok().body("");
     }
 

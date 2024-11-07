@@ -1,18 +1,16 @@
 package hu.unideb.inf.redditclone.repository;
 
-import hu.unideb.inf.redditclone.entity.CommunityDTO;
-import hu.unideb.inf.redditclone.entity.UserDTO;
+import hu.unideb.inf.redditclone.entity.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface UserRepo extends JpaRepository<UserDTO, Long> {
+public interface UserRepo extends JpaRepository<UserEntity, Long> {
 
-    Optional<UserDTO> findByUsername(String username);
+    Optional<UserEntity> findByUsername(String username);
 
-    Optional<UserDTO> findByEmail(String email);
+    Optional<UserEntity> findByEmail(String email);
 
 }

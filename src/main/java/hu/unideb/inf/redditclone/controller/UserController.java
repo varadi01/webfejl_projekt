@@ -1,6 +1,6 @@
 package hu.unideb.inf.redditclone.controller;
 
-import hu.unideb.inf.redditclone.entity.UserDTO;
+import hu.unideb.inf.redditclone.entity.UserEntity;
 import hu.unideb.inf.redditclone.service.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,26 +20,26 @@ public class UserController {
 
     @GetMapping("/")
     @CrossOrigin
-    public ResponseEntity<List<UserDTO>> getAllUsers() {
+    public ResponseEntity<List<UserEntity>> getAllUsers() {
         return ResponseEntity.ok().body(userService.getAllUsers());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<UserDTO> getUserById(@PathVariable Long id) {
+    public ResponseEntity<UserEntity> getUserById(@PathVariable Long id) {
         //what if null
         return ResponseEntity.ok().body(userService.getUserById(id));
     }
 
-    @PostMapping("/")
-    public ResponseEntity<UserDTO> createUser(@RequestBody UserDTO userDTO) {
-        //TODO
-        //check for uniquness
-        return ResponseEntity.ok().body(userService.createUser(userDTO));
-    }
+//    @PostMapping("/")
+//    public ResponseEntity<UserEntity> createUser(@RequestBody UserEntity userEntity) {
+//        //TODO
+//        //check for uniquness
+//        return ResponseEntity.ok().body(userService.createUser(userEntity));
+//    }
 
     //PROBABLY
     @PutMapping("/namech/{userId}")
-    public ResponseEntity<UserDTO> updateUserDisplayName(@PathVariable Long userId, @RequestBody String displayName) {
+    public ResponseEntity<UserEntity> updateUserDisplayName(@PathVariable Long userId, @RequestBody String displayName) {
         return ResponseEntity.ok().body(userService.updateUserDisplayName(userId, displayName));
     }
 }

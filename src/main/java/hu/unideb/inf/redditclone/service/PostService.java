@@ -1,10 +1,9 @@
 package hu.unideb.inf.redditclone.service;
 
-import hu.unideb.inf.redditclone.entity.PostDTO;
+import hu.unideb.inf.redditclone.entity.PostEntity;
 import hu.unideb.inf.redditclone.repository.PostRepo;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -23,30 +22,30 @@ public class PostService {
 
     //get top posts recently?
     //TODO
-    public List<PostDTO> getNewPosts() {
+    public List<PostEntity> getNewPosts() {
         var lastWeek = LocalDateTime.now().minusWeeks(1);
         return postRepository.findAllByCreatedAtAfterOrderByCreatedAt(lastWeek);
     }
 
-    public List<PostDTO> getHotPosts(){
+    public List<PostEntity> getHotPosts(){
         var lastWeek = LocalDateTime.now().minusWeeks(1);
         return postRepository.findAllByCreatedAtAfterOrderByVotes(lastWeek);
     }
 
     //get posts by community, get a few at a time
 
-    public List<PostDTO> getAllPostsByCommunity(Long communityId) {
+    public List<PostEntity> getAllPostsByCommunity(Long communityId) {
         return postRepository.findAllByCommunityId(communityId);
     }
 
     //create post
-    public PostDTO createPost(PostDTO postDTO) {
-        return postRepository.save(postDTO);
+    public PostEntity createPost(PostEntity postEntity) {
+        return postRepository.save(postEntity);
     }
 
     //get post by author
 
-    public List<PostDTO> getAllPostsByUserId(Long userId) {
+    public List<PostEntity> getAllPostsByUserId(Long userId) {
         return postRepository.findAllByAuthorId(userId);
     }
 
@@ -62,25 +61,25 @@ public class PostService {
         postRepository.deleteAllByCommunityId(communityId);
     }
 
-    public PostDTO updatePostBody(Long postId, String body) {
-        Optional<PostDTO> optionalPostDTO = postRepository.findById(postId);
+    public PostEntity updatePostBody(Long postId, String body) {
+        Optional<PostEntity> optionalPostDTO = postRepository.findById(postId);
         if (optionalPostDTO.isPresent()) {
-            PostDTO postDTO = optionalPostDTO.get();
-            postDTO.setBody(body);
-            postDTO.setEdited(true);
-            return postRepository.save(postDTO);
+            PostEntity postEntity = optionalPostDTO.get();
+            postEntity.setBody(body);
+            postEntity.setEdited(true);
+            return postRepository.save(postEntity);
         }
         return null;
     }
 
     //voting
 
-    public PostDTO updatePostVotes(Long postId, int vote) {
-        Optional<PostDTO> optionalPostDTO = postRepository.findById(postId);
+    public PostEntity updatePostVotes(Long postId, int vote) {
+        Optional<PostEntity> optionalPostDTO = postRepository.findById(postId);
         if (optionalPostDTO.isPresent()) {
-            PostDTO postDTO = optionalPostDTO.get();
-            postDTO.setVotes(postDTO.getVotes() + vote);
-            return postRepository.save(postDTO);
+            PostEntity postEntity = optionalPostDTO.get();
+            postEntity.setVotes(postEntity.getVotes() + vote);
+            return postRepository.save(postEntity);
         }
         return null;
     }

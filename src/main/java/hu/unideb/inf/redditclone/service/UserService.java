@@ -1,6 +1,6 @@
 package hu.unideb.inf.redditclone.service;
 
-import hu.unideb.inf.redditclone.entity.UserDTO;
+import hu.unideb.inf.redditclone.entity.UserEntity;
 import hu.unideb.inf.redditclone.repository.UserRepo;
 import org.springframework.stereotype.Service;
 
@@ -18,36 +18,36 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public UserDTO createUser(UserDTO user) {
+    public UserEntity createUser(UserEntity user) {
         return userRepository.save(user);
     }
 
-    public UserDTO getUserByUsername(String username) {
-        Optional<UserDTO> user = userRepository.findByUsername(username);
+    public UserEntity getUserByUsername(String username) {
+        Optional<UserEntity> user = userRepository.findByUsername(username);
         if (user.isPresent()) {
             return user.get();
         }
         return null;
     }
 
-    public UserDTO getUserById(Long id) {
-        Optional<UserDTO> user = userRepository.findById(id);
+    public UserEntity getUserById(Long id) {
+        Optional<UserEntity> user = userRepository.findById(id);
         if (user.isPresent()) {
             return user.get();
         }
         return null;
     }
 
-    public List<UserDTO> getAllUsers() {
+    public List<UserEntity> getAllUsers() {
         return userRepository.findAll();
     }
 
-    public UserDTO updateUserDisplayName(Long userId, String newDisplayName){
-        Optional<UserDTO> user = userRepository.findById(userId);
+    public UserEntity updateUserDisplayName(Long userId, String newDisplayName){
+        Optional<UserEntity> user = userRepository.findById(userId);
         if (user.isPresent()) {
-            UserDTO userDTO = user.get();
-            userDTO.setDisplayName(newDisplayName);
-            return userRepository.save(userDTO);
+            UserEntity userEntity = user.get();
+            userEntity.setDisplayName(newDisplayName);
+            return userRepository.save(userEntity);
         }
         return null;
     }

@@ -1,7 +1,6 @@
 package hu.unideb.inf.redditclone.service;
 
-import hu.unideb.inf.redditclone.entity.CommentDTO;
-import hu.unideb.inf.redditclone.entity.PostDTO;
+import hu.unideb.inf.redditclone.entity.CommentEntity;
 import hu.unideb.inf.redditclone.repository.CommentRepo;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
@@ -22,12 +21,12 @@ public class CommentService {
     //this is where it gets iffy
 
     //creation only under post, and parent comment... UH (handled)
-    public CommentDTO createComment(CommentDTO commentDTO) {
-        if (commentDTO.getParentComment() == null){
-            CommentDTO cmt = new CommentDTO(commentDTO.getText(),commentDTO.getAuthor(),commentDTO.getPost());
+    public CommentEntity createComment(CommentEntity commentEntity) {
+        if (commentEntity.getParentComment() == null){
+            CommentEntity cmt = new CommentEntity(commentEntity.getText(), commentEntity.getAuthor(), commentEntity.getPost());
             return commentRepository.save(cmt);
         }
-        CommentDTO cmt = new CommentDTO(commentDTO.getText(),commentDTO.getAuthor(),commentDTO.getPost(), commentDTO.getParentComment());
+        CommentEntity cmt = new CommentEntity(commentEntity.getText(), commentEntity.getAuthor(), commentEntity.getPost(), commentEntity.getParentComment());
         return commentRepository.save(cmt);
     }
 
@@ -35,34 +34,34 @@ public class CommentService {
 
 
     //getting comments under post, (under parent comment?)
-    public List<CommentDTO> getAllCommentsUnderPost(Long postId) {
+    public List<CommentEntity> getAllCommentsUnderPost(Long postId) {
         return commentRepository.findAllByPostId(postId);
     }
 
     //getting comment by user
-    public List<CommentDTO> getAllCommentsByAuthor(Long authorId) {
+    public List<CommentEntity> getAllCommentsByAuthor(Long authorId) {
         return commentRepository.findAllByAuthorId(authorId);
     }
 
-    public CommentDTO updateCommentBody(Long id, String body) {
-        Optional<CommentDTO> commentDTO = commentRepository.findById(id);
+    public CommentEntity updateCommentBody(Long id, String body) {
+        Optional<CommentEntity> commentDTO = commentRepository.findById(id);
         if (commentDTO.isPresent()) {
-            CommentDTO commentDTO1 = commentDTO.get();
-            commentDTO1.setText(body);
-            commentDTO1.setEdited(true);
-            return commentRepository.save(commentDTO1);
+            CommentEntity commentEntity1 = commentDTO.get();
+            commentEntity1.setText(body);
+            commentEntity1.setEdited(true);
+            return commentRepository.save(commentEntity1);
         }
         return null;
     }
 
     //VOTING???
     //should work
-    public CommentDTO updateCommentVotes(Long commentId, int vote) {
-        Optional<CommentDTO> optionalCommentDTO = commentRepository.findById(commentId);
+    public CommentEntity updateCommentVotes(Long commentId, int vote) {
+        Optional<CommentEntity> optionalCommentDTO = commentRepository.findById(commentId);
         if (optionalCommentDTO.isPresent()) {
-            CommentDTO commentDTO = optionalCommentDTO.get();
-            commentDTO.setVotes(commentDTO.getVotes() + vote);
-            return commentRepository.save(commentDTO);
+            CommentEntity commentEntity = optionalCommentDTO.get();
+            commentEntity.setVotes(commentEntity.getVotes() + vote);
+            return commentRepository.save(commentEntity);
         }
         return null;
     }

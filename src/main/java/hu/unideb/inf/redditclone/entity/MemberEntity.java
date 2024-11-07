@@ -5,7 +5,7 @@ import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 @Table(name = "members")
-public class MemberDTO {
+public class MemberEntity {
     @Id
     @GenericGenerator(name = "member_seq_gen", strategy = "increment") //deprecated, but works for now
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "member_seq_gen")
@@ -14,15 +14,15 @@ public class MemberDTO {
 
     @ManyToOne
     @JoinColumn(name = "community_id", referencedColumnName = "id")
-    private CommunityDTO community;
+    private CommunityEntity community;
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
-    private UserDTO user;
+    private UserEntity user;
 
-    public MemberDTO() {
+    public MemberEntity() {
     }
 
-    public MemberDTO(CommunityDTO community, UserDTO user) {
+    public MemberEntity(CommunityEntity community, UserEntity user) {
         this.community = community;
         this.user = user;
     }
@@ -36,19 +36,19 @@ public class MemberDTO {
     }
 
 
-    public UserDTO getUser() {
+    public UserEntity getUser() {
         return user;
     }
 
-    public void setUser(UserDTO user) {
+    public void setUser(UserEntity user) {
         this.user = user;
     }
 
-    public CommunityDTO getCommunity() {
+    public CommunityEntity getCommunity() {
         return community;
     }
 
-    public void setCommunity(CommunityDTO community) {
+    public void setCommunity(CommunityEntity community) {
         this.community = community;
     }
 }

@@ -1,13 +1,12 @@
 package hu.unideb.inf.redditclone.service;
 
-import hu.unideb.inf.redditclone.entity.CommunityDTO;
-import hu.unideb.inf.redditclone.entity.MemberDTO;
+import hu.unideb.inf.redditclone.entity.CommunityEntity;
+import hu.unideb.inf.redditclone.entity.MemberEntity;
 import hu.unideb.inf.redditclone.repository.MemberRepo;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class MemberService {
@@ -18,8 +17,8 @@ public class MemberService {
         this.memberRepository = memberRepository;
     }
 
-    public MemberDTO joinCommunity(MemberDTO memberDTO) {
-        return memberRepository.save(memberDTO);
+    public MemberEntity joinCommunity(MemberEntity memberEntity) {
+        return memberRepository.save(memberEntity);
     }
 
     @Transactional
@@ -37,11 +36,11 @@ public class MemberService {
         return memberRepository.findMembersByCommunityId(id).toArray().length;
     }
 
-    public List<MemberDTO> getAllMembers(Long id) {
+    public List<MemberEntity> getAllMembers(Long id) {
          return memberRepository.findMembersByCommunityId(id);
     }
 
-    public List<CommunityDTO> getJoinedCommunities(Long id) {
-        return memberRepository.findMembersByUserId(id).stream().map(MemberDTO::getCommunity).toList();
+    public List<CommunityEntity> getJoinedCommunities(Long id) {
+        return memberRepository.findMembersByUserId(id).stream().map(MemberEntity::getCommunity).toList();
     }
 }

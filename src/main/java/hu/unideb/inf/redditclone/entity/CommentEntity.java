@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "comments")
-public class CommentDTO {
+public class CommentEntity {
 
     @Id
     @GenericGenerator(name = "comment_seq_gen", strategy = "increment") //deprecated, but works for now
@@ -17,21 +17,21 @@ public class CommentDTO {
     private String text;
     @ManyToOne
     @JoinColumn(name = "author_id", referencedColumnName = "id")
-    private UserDTO author;
+    private UserEntity author;
     @OneToOne
     @JoinColumn(name = "post_id", referencedColumnName = "id")
-    private PostDTO post;
+    private PostEntity post;
     //might wanna revert this to id simply
     @OneToOne
     @JoinColumn(name = "parent_comment_id",referencedColumnName = "id")
-    private CommentDTO parentComment;
+    private CommentEntity parentComment;
     private LocalDateTime createdAt;
     private Long votes;
     @Column(nullable = false)
     private boolean edited = false;
 
     //might need one without parent
-    public CommentDTO(String text, UserDTO author, PostDTO post, CommentDTO parentComment) {
+    public CommentEntity(String text, UserEntity author, PostEntity post, CommentEntity parentComment) {
         this.text = text;
         this.author = author;
         this.post = post;
@@ -40,7 +40,7 @@ public class CommentDTO {
         this.votes = 1L;
     }
 
-    public CommentDTO(String text, UserDTO author, PostDTO post) {
+    public CommentEntity(String text, UserEntity author, PostEntity post) {
         this.text = text;
         this.author = author;
         this.post = post;
@@ -49,7 +49,7 @@ public class CommentDTO {
         this.votes = 1L;
     }
 
-    public CommentDTO() {}
+    public CommentEntity() {}
 
 
     public Long getId() {
@@ -93,27 +93,27 @@ public class CommentDTO {
         this.edited = edited;
     }
 
-    public CommentDTO getParentComment() {
+    public CommentEntity getParentComment() {
         return parentComment;
     }
 
-    public void setParentComment(CommentDTO parentComment) {
+    public void setParentComment(CommentEntity parentComment) {
         this.parentComment = parentComment;
     }
 
-    public PostDTO getPost() {
+    public PostEntity getPost() {
         return post;
     }
 
-    public void setPost(PostDTO post) {
+    public void setPost(PostEntity post) {
         this.post = post;
     }
 
-    public UserDTO getAuthor() {
+    public UserEntity getAuthor() {
         return author;
     }
 
-    public void setAuthor(UserDTO author) {
+    public void setAuthor(UserEntity author) {
         this.author = author;
     }
 }

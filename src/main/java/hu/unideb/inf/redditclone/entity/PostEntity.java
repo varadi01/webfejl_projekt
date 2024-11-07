@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "posts")
-public class PostDTO {
+public class PostEntity {
 
     @Id
     @GenericGenerator(name = "post_seq_gen", strategy = "increment") //deprecated, but works for now
@@ -20,17 +20,17 @@ public class PostDTO {
     private LocalDateTime createdAt;
     @ManyToOne
     @JoinColumn(name = "author_id", referencedColumnName = "id") //may need to be camelcase
-    private UserDTO author;
+    private UserEntity author;
     @OneToOne
     @JoinColumn(name = "community_id", referencedColumnName = "id")
-    private CommunityDTO community;
+    private CommunityEntity community;
     private Long votes;
     private boolean edited = false;
 
-    public PostDTO() {
+    public PostEntity() {
     }
 
-    public PostDTO(String title, String body, UserDTO author, CommunityDTO community) {
+    public PostEntity(String title, String body, UserEntity author, CommunityEntity community) {
         this.title = title;
         this.body = body;
         this.author = author;
@@ -91,19 +91,19 @@ public class PostDTO {
         this.edited = edited;
     }
 
-    public UserDTO getAuthor() {
+    public UserEntity getAuthor() {
         return author;
     }
 
-    public void setAuthor(UserDTO author) {
+    public void setAuthor(UserEntity author) {
         this.author = author;
     }
 
-    public CommunityDTO getCommunity() {
+    public CommunityEntity getCommunity() {
         return community;
     }
 
-    public void setCommunity(CommunityDTO community) {
+    public void setCommunity(CommunityEntity community) {
         this.community = community;
     }
 }

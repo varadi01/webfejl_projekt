@@ -1,11 +1,8 @@
 package hu.unideb.inf.redditclone.service;
 
-import hu.unideb.inf.redditclone.entity.CommunityDTO;
-import hu.unideb.inf.redditclone.entity.MemberDTO;
-import hu.unideb.inf.redditclone.entity.PostDTO;
+import hu.unideb.inf.redditclone.entity.CommunityEntity;
 import hu.unideb.inf.redditclone.repository.CommunityRepo;
 import jakarta.transaction.Transactional;
-import org.hibernate.query.spi.Limit;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -24,11 +21,11 @@ public class CommunityService {
         this.postService = postService;
     }
 
-    public CommunityDTO createCommunity(CommunityDTO communityDTO) {
-        return communityRepository.save(communityDTO);
+    public CommunityEntity createCommunity(CommunityEntity communityEntity) {
+        return communityRepository.save(communityEntity);
     }
 
-    public List<CommunityDTO> getAllCommunities() {
+    public List<CommunityEntity> getAllCommunities() {
         return communityRepository.findAll();
     }
 
@@ -40,8 +37,8 @@ public class CommunityService {
 
      */
 
-    public CommunityDTO getCommunityById(Long id) {
-        Optional<CommunityDTO> comm = communityRepository.findById(id);
+    public CommunityEntity getCommunityById(Long id) {
+        Optional<CommunityEntity> comm = communityRepository.findById(id);
         if (comm.isPresent()) {
             return comm.get();
         }
@@ -59,12 +56,12 @@ public class CommunityService {
 
     //updating subs
     //only owner can do these
-    public CommunityDTO updateCommunityDescription(Long id, String description) {
-        Optional<CommunityDTO> comm = communityRepository.findById(id);
+    public CommunityEntity updateCommunityDescription(Long id, String description) {
+        Optional<CommunityEntity> comm = communityRepository.findById(id);
         if (comm.isPresent()) {
-            CommunityDTO communityDTO = comm.get();
-            communityDTO.setDescription(description);
-            return communityRepository.save(communityDTO);
+            CommunityEntity communityEntity = comm.get();
+            communityEntity.setDescription(description);
+            return communityRepository.save(communityEntity);
         }
         return null;
     }

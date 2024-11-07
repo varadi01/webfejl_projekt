@@ -3,11 +3,9 @@ package hu.unideb.inf.redditclone.entity;
 import jakarta.persistence.*;
 import org.hibernate.annotations.GenericGenerator;
 
-import java.util.Set;
-
 @Entity
 @Table(name = "users")
-public class UserDTO {
+public class UserEntity {
 
     @Id
     @GenericGenerator(name = "user_seq_gen", strategy = "increment") //deprecated, but works for now
@@ -20,10 +18,13 @@ public class UserDTO {
     private String email;
     private String displayName;
 
-    protected UserDTO() {
+    //TODO bc of flyway thing
+    private String bio;
+
+    protected UserEntity() {
     }
 
-    public UserDTO(String username, String email) {
+    public UserEntity(String username, String email) {
         this.username = username;
         this.email = email;
         this.displayName = username; //username by default
