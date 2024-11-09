@@ -2,8 +2,10 @@ package hu.unideb.inf.redditclone.security.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 @Entity
+@Table(name = "user_auth")
 public class UserAuthEntity {
     @Id
     private int id;

@@ -30,12 +30,10 @@ public class UserController {
         return ResponseEntity.ok().body(userService.getUserById(id));
     }
 
-//    @PostMapping("/")
-//    public ResponseEntity<UserEntity> createUser(@RequestBody UserEntity userEntity) {
-//        //TODO
-//        //check for uniquness
-//        return ResponseEntity.ok().body(userService.createUser(userEntity));
-//    }
+    @PostMapping("/") //TODO REMOVE
+    public ResponseEntity<UserEntity> createUser(@RequestBody UserEntity userEntity) {
+        return ResponseEntity.ok().body(userService.createUser(userEntity));
+    }
 
     //PROBABLY
     @PutMapping("/namech/{userId}")

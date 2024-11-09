@@ -24,10 +24,11 @@ public class UserEntity {
     protected UserEntity() {
     }
 
-    public UserEntity(String username, String email) {
+    public UserEntity(String username, String email, String bio) {
         this.username = username;
         this.email = email;
-        this.displayName = username; //username by default
+        //this.displayName = username; //username by default
+        this.bio = bio;
     }
 
     public Long getId() {
@@ -61,5 +62,13 @@ public class UserEntity {
 
     public void setDisplayName(String displayName) {
         this.displayName = displayName;
+    }
+
+    public String getBio() {
+        return bio;
+    }
+
+    public void setBio(String bio) {
+        this.bio = bio;
     }
 }

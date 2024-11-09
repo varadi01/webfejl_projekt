@@ -19,6 +19,7 @@ public class UserService {
     }
 
     public UserEntity createUser(UserEntity user) {
+        user.setDisplayName(user.getUsername());
         return userRepository.save(user);
     }
 

@@ -24,9 +24,12 @@ public class CommunityEntity {
 
 
     //TODO
+    /*
     @Column(name = "number_of_members")
     @Formula("(select count(m.community_id) from Members m where m.community_id = id)")
     private Long numberOfMembers; //TODO TEST
+
+     */
 
 
 
