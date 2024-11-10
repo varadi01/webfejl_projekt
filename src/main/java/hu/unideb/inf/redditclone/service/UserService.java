@@ -52,4 +52,14 @@ public class UserService {
         }
         return null;
     }
+
+    public UserEntity updateUserBio(Long userId, String newBio){
+        Optional<UserEntity> user = userRepository.findById(userId);
+        if (user.isPresent()) {
+            UserEntity userEntity = user.get();
+            userEntity.setBio(newBio);
+            return userRepository.save(userEntity);
+        }
+        return null;
+    }
 }

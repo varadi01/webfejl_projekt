@@ -18,7 +18,6 @@ public class UserAuthController {
     @PostMapping("/register")
     public UserAuthEntity register(@RequestBody UserAuthEntity user) {
         return service.register(user);
-
     }
 
     @PostMapping("/login")

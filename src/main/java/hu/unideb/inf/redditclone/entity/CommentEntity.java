@@ -30,7 +30,6 @@ public class CommentEntity {
     @Column(nullable = false)
     private boolean edited = false;
 
-    //might need one without parent
     public CommentEntity(String text, UserEntity author, PostEntity post, CommentEntity parentComment) {
         this.text = text;
         this.author = author;

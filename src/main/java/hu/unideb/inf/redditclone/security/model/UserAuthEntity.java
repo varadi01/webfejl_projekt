@@ -1,13 +1,14 @@
 package hu.unideb.inf.redditclone.security.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 @Table(name = "user_auth")
 public class UserAuthEntity {
     @Id
+    @GenericGenerator(name = "user_auth_seq_gen", strategy = "increment") //deprecated, but works for now
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "user_auth_seq_gen")
     private int id;
     private String username;
     private String password;

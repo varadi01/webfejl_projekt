@@ -1,6 +1,6 @@
 /home/user/IdeaProjects/webfejl_projekt/src/main/java/hu/unideb/inf/redditclone/RedditcloneApplication.java
 /home/user/IdeaProjects/webfejl_projekt/src/main/java/hu/unideb/inf/redditclone/controller/CommentController.java
-/home/user/IdeaProjects/webfejl_projekt/src/main/java/hu/unideb/inf/redditclone/controller/ComunityController.java
+/home/user/IdeaProjects/webfejl_projekt/src/main/java/hu/unideb/inf/redditclone/controller/CommunityController.java
 /home/user/IdeaProjects/webfejl_projekt/src/main/java/hu/unideb/inf/redditclone/controller/MemberController.java
 /home/user/IdeaProjects/webfejl_projekt/src/main/java/hu/unideb/inf/redditclone/controller/PostController.java
 /home/user/IdeaProjects/webfejl_projekt/src/main/java/hu/unideb/inf/redditclone/controller/UserController.java
@@ -23,6 +23,7 @@
 /home/user/IdeaProjects/webfejl_projekt/src/main/java/hu/unideb/inf/redditclone/security/service/CustomUserDetailsService.java
 /home/user/IdeaProjects/webfejl_projekt/src/main/java/hu/unideb/inf/redditclone/security/service/JwtService.java
 /home/user/IdeaProjects/webfejl_projekt/src/main/java/hu/unideb/inf/redditclone/security/service/UserAuthService.java
+/home/user/IdeaProjects/webfejl_projekt/src/main/java/hu/unideb/inf/redditclone/security/utils/UserIdUtil.java
 /home/user/IdeaProjects/webfejl_projekt/src/main/java/hu/unideb/inf/redditclone/service/CommentService.java
 /home/user/IdeaProjects/webfejl_projekt/src/main/java/hu/unideb/inf/redditclone/service/CommunityService.java
 /home/user/IdeaProjects/webfejl_projekt/src/main/java/hu/unideb/inf/redditclone/service/MemberService.java

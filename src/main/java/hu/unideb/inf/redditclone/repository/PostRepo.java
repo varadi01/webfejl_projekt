@@ -11,6 +11,8 @@ import java.util.List;
 @Repository
 public interface PostRepo extends JpaRepository<PostEntity, Long> {
 
+    PostEntity findById(long id);
+
     List<PostEntity> findAllByCommunityId(Long communityId);
 
     List<PostEntity> findAllByAuthorId(Long authorId);

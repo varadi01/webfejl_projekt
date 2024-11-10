@@ -49,6 +49,10 @@ public class PostService {
         return postRepository.findAllByAuthorId(userId);
     }
 
+    public PostEntity getPostById(Long postId) {
+        return postRepository.findById(postId).orElse(null);
+    }
+
     //delete post
     @Transactional //might not need
     public void deletePost(Long postId) {

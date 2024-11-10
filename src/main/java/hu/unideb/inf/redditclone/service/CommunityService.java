@@ -1,6 +1,7 @@
 package hu.unideb.inf.redditclone.service;
 
 import hu.unideb.inf.redditclone.entity.CommunityEntity;
+import hu.unideb.inf.redditclone.entity.MemberEntity;
 import hu.unideb.inf.redditclone.repository.CommunityRepo;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
@@ -22,7 +23,9 @@ public class CommunityService {
     }
 
     public CommunityEntity createCommunity(CommunityEntity communityEntity) {
-        return communityRepository.save(communityEntity);
+        CommunityEntity c = communityRepository.save(communityEntity);
+        memberService.joinCommunity(new MemberEntity(communityEntity, communityEntity.getOwner()));
+        return c;
     }
 
     public List<CommunityEntity> getAllCommunities() {

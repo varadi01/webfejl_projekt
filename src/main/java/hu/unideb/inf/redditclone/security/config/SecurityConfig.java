@@ -36,7 +36,7 @@ public class SecurityConfig {
         return http.csrf(AbstractHttpConfigurer::disable).
                 authorizeHttpRequests(request -> request
                         .requestMatchers("login", "register").permitAll()
-                        .anyRequest().permitAll())
+                        .anyRequest().authenticated())
                         .httpBasic(Customizer.withDefaults()).
                 sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)

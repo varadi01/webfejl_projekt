@@ -31,7 +31,9 @@ public class CommentService {
     }
 
     //editing, change flag
-
+    public CommentEntity getComment(Long id) {
+        return commentRepository.findById(id).orElse(null);
+    }
 
     //getting comments under post, (under parent comment?)
     public List<CommentEntity> getAllCommentsUnderPost(Long postId) {
@@ -54,8 +56,6 @@ public class CommentService {
         return null;
     }
 
-    //VOTING???
-    //should work
     public CommentEntity updateCommentVotes(Long commentId, int vote) {
         Optional<CommentEntity> optionalCommentDTO = commentRepository.findById(commentId);
         if (optionalCommentDTO.isPresent()) {

@@ -15,18 +15,17 @@ public class UserEntity {
 
     @Column(unique = true, nullable = false)
     private String username;
+    //TODO REMOVE
     private String email;
     private String displayName;
-
-    //TODO bc of flyway thing
     private String bio;
 
     protected UserEntity() {
     }
 
-    public UserEntity(String username, String email, String bio) {
+    public UserEntity(String username, String bio) {
         this.username = username;
-        this.email = email;
+        this.email = null;
         //this.displayName = username; //username by default
         this.bio = bio;
     }

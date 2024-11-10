@@ -1,11 +1,14 @@
 package hu.unideb.inf.redditclone.controller;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import hu.unideb.inf.redditclone.entity.PostEntity;
+import hu.unideb.inf.redditclone.security.utils.UserIdUtil;
 import hu.unideb.inf.redditclone.service.PostService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/post")
@@ -19,12 +22,13 @@ public class PostController {
 
     @GetMapping("/hot")
     public ResponseEntity<List<PostEntity>> getHotPosts() {
-        return ResponseEntity.ok(postService.getHotPosts());
+        return ResponseEntity.ok().body(postService.getHotPosts());
     }
 
+    //TODO not ordered?, TEST
     @GetMapping("/new")
     public ResponseEntity<List<PostEntity>> getNewPosts() {
-        return ResponseEntity.ok(postService.getNewPosts());
+        return ResponseEntity.ok().body(postService.getNewPosts());
     }
 
     @GetMapping("/{communityId}")
@@ -37,28 +41,80 @@ public class PostController {
         return ResponseEntity.ok().body(postService.getAllPostsByUserId(userId));
     }
 
-    //this stupid or nah?
     @PostMapping("/")
-    public ResponseEntity<PostEntity> createPost(@RequestBody PostEntity postEntity) {
-        PostEntity post = new PostEntity(postEntity.getTitle(), postEntity.getBody(), postEntity.getAuthor() , postEntity.getCommunity());
+    public ResponseEntity<PostEntity> createPost(@RequestBody PostEntity postEntity,
+                                                 @RequestHeader(name = "Authorization") String authHeader) {
+
+        if (postEntity.getCommunity().getId() == null){
+            return ResponseEntity.badRequest().body(null);
+        }
+
+        if (!UserIdUtil.validateUserHasPermission(authHeader, postEntity.getAuthor().getId())) {
+            return ResponseEntity.badRequest().body(null);
+        }
+
+        PostEntity post = new PostEntity(postEntity.getTitle(), postEntity.getBody(),
+                postEntity.getAuthor(), postEntity.getCommunity());
         return ResponseEntity.ok().body(postService.createPost(post));
     }
 
-    //needs auth
-    @PutMapping("/{postId}") // requestbody gets parsed to a raw string
-    public ResponseEntity<PostEntity> updatePost(@PathVariable Long postId, @RequestBody String body) {
-        return ResponseEntity.ok().body(postService.updatePostBody(postId, body));
+    @PutMapping("/update")
+    public ResponseEntity<PostEntity> updatePost(@RequestBody JsonNode body,
+                                                 @RequestHeader(name = "Authorization") String authHeader) {
+        long uid = body.get("user_id").asLong();
+        long pid = body.get("post_id").asLong();
+
+        if (!UserIdUtil.validateUserHasPermission(authHeader, uid)) {
+            return ResponseEntity.badRequest().body(null);
+        }
+
+        if (!isUserTheAuthor(uid,pid)){
+            return ResponseEntity.badRequest().body(null);
+        }
+
+        return ResponseEntity.ok().body(postService.updatePostBody(pid,
+                body.get("body").asText()));
     }
 
     //string with val: 1 or -1
-    @PutMapping("/vote/{postId}")
-    public ResponseEntity<PostEntity> updatePostVotes(@PathVariable Long postId, @RequestBody String val) {
-        return ResponseEntity.ok().body(postService.updatePostVotes(postId, Integer.parseInt(val)));
+    @PutMapping("/vote")
+    public ResponseEntity<PostEntity> updatePostVotes(@RequestBody JsonNode body,
+                                                      @RequestHeader(name = "Authorization") String authHeader) {
+        long uid = body.get("user_id").asLong();
+        long pid = body.get("post_id").asLong();
+
+        if (!UserIdUtil.validateUserHasPermission(authHeader, uid)) {
+            return ResponseEntity.badRequest().body(null);
+        }
+
+        if (isUserTheAuthor(uid,pid)){
+            return ResponseEntity.badRequest().body(null);
+        }
+
+        return ResponseEntity.ok().body(postService.updatePostVotes(pid,
+                Integer.parseInt(body.get("vote").asText())));
     }
 
-    @DeleteMapping("/del/{postId}")
-    public ResponseEntity<String> deletePost(@PathVariable Long postId) {
-        postService.deletePost(postId);
+    @DeleteMapping("/del")
+    public ResponseEntity<String> deletePost(@RequestHeader(name = "Authorization") String authHeader,
+                                             @RequestBody JsonNode body) {
+        long uid = body.get("user_id").asLong();
+        long pid = body.get("post_id").asLong();
+
+        //body has post_id and user_id
+        if (!UserIdUtil.validateUserHasPermission(authHeader, uid)) {
+            return ResponseEntity.badRequest().body(null);
+        }
+
+        if (!isUserTheAuthor(uid,pid)){
+            return ResponseEntity.badRequest().body(null);
+        }
+
+        postService.deletePost(pid);
         return ResponseEntity.ok().body("ok");
+    }
+
+    private boolean isUserTheAuthor(long userId, long postId){
+        return  postService.getPostById(postId).getAuthor().getId().equals(userId);
     }
 }

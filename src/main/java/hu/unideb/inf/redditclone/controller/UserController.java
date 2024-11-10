@@ -1,6 +1,8 @@
 package hu.unideb.inf.redditclone.controller;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import hu.unideb.inf.redditclone.entity.UserEntity;
+import hu.unideb.inf.redditclone.security.utils.UserIdUtil;
 import hu.unideb.inf.redditclone.service.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -30,14 +32,26 @@ public class UserController {
         return ResponseEntity.ok().body(userService.getUserById(id));
     }
 
-    @PostMapping("/") //TODO REMOVE
-    public ResponseEntity<UserEntity> createUser(@RequestBody UserEntity userEntity) {
-        return ResponseEntity.ok().body(userService.createUser(userEntity));
+    @PutMapping("/namech")
+    public ResponseEntity<UserEntity> updateUserDisplayName(@RequestBody JsonNode body,
+                                                            @RequestHeader(name = "Authorization") String authHeader) {
+        if (!UserIdUtil.validateUserHasPermission(authHeader, body.get("user_id").asLong())){
+            return ResponseEntity.badRequest().body(null);
+        }
+
+        return ResponseEntity.ok().body(userService.updateUserDisplayName(body.get("user_id").asLong(),
+                body.get("display_name").asText()));
     }
 
-    //PROBABLY
-    @PutMapping("/namech/{userId}")
-    public ResponseEntity<UserEntity> updateUserDisplayName(@PathVariable Long userId, @RequestBody String displayName) {
-        return ResponseEntity.ok().body(userService.updateUserDisplayName(userId, displayName));
+    @PutMapping("/bio")
+    public ResponseEntity<UserEntity> updateUserBio(@RequestBody JsonNode body,
+                                                    @RequestHeader(name = "Authorization") String authHeader){
+
+        if (!UserIdUtil.validateUserHasPermission(authHeader, body.get("user_id").asLong())){
+            return ResponseEntity.badRequest().body(null);
+        }
+
+        return ResponseEntity.ok().body(userService.updateUserBio(body.get("user_id").asLong(),
+                body.get("bio").asText()));
     }
 }
