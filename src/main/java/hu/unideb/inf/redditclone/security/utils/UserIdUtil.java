@@ -13,9 +13,6 @@ public class UserIdUtil {
 
     public static void setRecord(String token, Long userId){
         JwtToUserIdMap.put(token, userId);
-        for (var i : JwtToUserIdMap.values()){
-            System.out.println(i);
-        }
     }
 
     public static void clearRecord(){

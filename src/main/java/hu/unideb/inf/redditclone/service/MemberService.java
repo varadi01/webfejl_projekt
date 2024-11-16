@@ -13,8 +13,11 @@ public class MemberService {
 
     private final MemberRepo memberRepository;
 
-    public MemberService(MemberRepo memberRepository) {
+    private final UserService userService;
+
+    public MemberService(MemberRepo memberRepository, UserService userService) {
         this.memberRepository = memberRepository;
+        this.userService = userService;
     }
 
     public MemberEntity joinCommunity(MemberEntity memberEntity) {
@@ -42,5 +45,10 @@ public class MemberService {
 
     public List<CommunityEntity> getJoinedCommunities(Long id) {
         return memberRepository.findMembersByUserId(id).stream().map(MemberEntity::getCommunity).toList();
+    }
+
+    public List<CommunityEntity> getJoinedCommunitiesByUsername(String username) {
+        var u = userService.getUserByUsername(username);
+        return getJoinedCommunities(u.getId());
     }
 }

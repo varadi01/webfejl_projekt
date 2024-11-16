@@ -41,6 +41,7 @@ public class CommentController {
     }
 
     @PutMapping("/update")
+    @CrossOrigin
     public ResponseEntity<CommentEntity> updateComment(@RequestBody JsonNode body,
                                                        @RequestHeader(name = "Authorization") String authHeader) {
 
@@ -60,6 +61,7 @@ public class CommentController {
     }
 
     @PutMapping("/vote")
+    @CrossOrigin
     public ResponseEntity<CommentEntity> updateCommentVotes(@RequestBody JsonNode body,
                                                             @RequestHeader(name = "Authorization") String authHeader) {
         long uid =  body.get("user_id").asLong();

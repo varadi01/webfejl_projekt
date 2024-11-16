@@ -31,6 +31,11 @@ public class PostController {
         return ResponseEntity.ok().body(postService.getNewPosts());
     }
 
+    @GetMapping("/byid/{postId}")
+    public ResponseEntity<PostEntity> getPost(@PathVariable Long postId) {
+        return ResponseEntity.ok().body(postService.getPostById(postId));
+    }
+
     @GetMapping("/{communityId}")
     public ResponseEntity<List<PostEntity>> getPostsByCommunityId(@PathVariable Long communityId) {
         return ResponseEntity.ok().body(postService.getAllPostsByCommunity(communityId));
@@ -78,6 +83,7 @@ public class PostController {
 
     //string with val: 1 or -1
     @PutMapping("/vote")
+    @CrossOrigin
     public ResponseEntity<PostEntity> updatePostVotes(@RequestBody JsonNode body,
                                                       @RequestHeader(name = "Authorization") String authHeader) {
         long uid = body.get("user_id").asLong();

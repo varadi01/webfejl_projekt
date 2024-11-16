@@ -12,6 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/member")
+@CrossOrigin
 public class MemberController {
 
     private final MemberService memberService;
@@ -20,18 +21,26 @@ public class MemberController {
         this.memberService = memberService;
     }
 
-    //weird
     @GetMapping("/com/{communityId}")
+    @CrossOrigin
     public ResponseEntity<Integer> getNumberOfMembers(@PathVariable Long communityId) {
         return ResponseEntity.ok().body(memberService.getNumberOfMembers(communityId));
     }
 
     @GetMapping("/user/{userId}")
+    @CrossOrigin
     public ResponseEntity<List<CommunityEntity>> getJoinedCommunities(@PathVariable Long userId) {
         return ResponseEntity.ok().body(memberService.getJoinedCommunities(userId));
     }
 
+    @CrossOrigin
+    @GetMapping("user/name/{username}")
+    public ResponseEntity<List<CommunityEntity>> getJoinedCommunitiesByUsername(@PathVariable String username) {
+        return ResponseEntity.ok().body(memberService.getJoinedCommunitiesByUsername(username));
+    }
+
     @PostMapping("/join")
+    @CrossOrigin
     public ResponseEntity<MemberEntity> joinCommunity(@RequestBody MemberEntity memberEntity,
                                                       @RequestHeader(name = "Authorization") String authHeader) {
 
@@ -43,6 +52,7 @@ public class MemberController {
     }
 
     @DeleteMapping("/leave")
+    @CrossOrigin
     public ResponseEntity<String> leaveCommunity(@RequestBody MemberEntity memberEntity,
                                                  @RequestHeader(name = "Authorization") String authHeader) {
 

@@ -11,6 +11,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/community")
+@CrossOrigin
 public class CommunityController {
 
     private final CommunityService communityService;
@@ -26,12 +27,14 @@ public class CommunityController {
     }
 
     @GetMapping("/{id}")
+    @CrossOrigin
     public ResponseEntity<CommunityEntity> getCommunityById(@PathVariable Long id) {
         //what if null
         return ResponseEntity.ok().body(communityService.getCommunityById(id));
     }
 
     @PostMapping("/")
+    @CrossOrigin
     public ResponseEntity<CommunityEntity> createCommunity(@RequestBody CommunityEntity communityEntity,
                                                            @RequestHeader(name = "Authorization") String authHeader) {
         //check for uniqueness
@@ -56,6 +59,7 @@ public class CommunityController {
      */
 
     @PutMapping("/update")
+    @CrossOrigin
     public ResponseEntity<CommunityEntity> updateCommunityDescription(@RequestBody JsonNode body,
                                                                       @RequestHeader(name = "Authorization") String authHeader) {
 
@@ -75,6 +79,7 @@ public class CommunityController {
     }
 
     @DeleteMapping("/del_com")
+    @CrossOrigin
     public ResponseEntity<String> deleteCommunity(@RequestBody JsonNode body,
                                                   @RequestHeader(name = "Authorization") String authHeader) {
         long uid = body.get("user_id").asLong();

@@ -34,10 +34,13 @@ public class UserAuthService {
     //TODO
 
     public UserAuthEntity register(UserAuthEntity user) {
+        UserAuthEntity eu = repo.findByUsername(user.getUsername());
+        if (eu != null) {
+            return null;
+        }
         user.setPassword(encoder.encode(user.getPassword()));
         repo.save(user);
         userService.createUser(new UserEntity(user.getUsername(), ""));
-        //TODO
         return user;
     }
 
@@ -47,9 +50,11 @@ public class UserAuthService {
             String t = jwtService.generateToken(user.getUsername());
             Long uId = userService.getUserByUsername(user.getUsername()).getId();
             UserIdUtil.setRecord(t, uId);
+            System.out.println("user (" + user.getUsername() + ") authenticated with jwt"+ t );
             return t;
         } else {
-            return "failed verification";
+            System.out.println("user failed authentication");
+            return null;
         }
     }
 }

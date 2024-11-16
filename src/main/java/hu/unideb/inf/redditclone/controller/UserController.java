@@ -11,6 +11,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/user")
+@CrossOrigin
 public class UserController {
 
     private final UserService userService;
@@ -27,12 +28,19 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
+    @CrossOrigin
     public ResponseEntity<UserEntity> getUserById(@PathVariable Long id) {
-        //what if null
         return ResponseEntity.ok().body(userService.getUserById(id));
     }
 
+    @GetMapping("userbyname/{username}")
+    @CrossOrigin
+    public ResponseEntity<UserEntity> getUserByUsername(@PathVariable String username) {
+        return ResponseEntity.ok().body(userService.getUserByUsername(username));
+    }
+
     @PutMapping("/namech")
+    @CrossOrigin
     public ResponseEntity<UserEntity> updateUserDisplayName(@RequestBody JsonNode body,
                                                             @RequestHeader(name = "Authorization") String authHeader) {
         if (!UserIdUtil.validateUserHasPermission(authHeader, body.get("user_id").asLong())){
@@ -44,6 +52,7 @@ public class UserController {
     }
 
     @PutMapping("/bio")
+    @CrossOrigin
     public ResponseEntity<UserEntity> updateUserBio(@RequestBody JsonNode body,
                                                     @RequestHeader(name = "Authorization") String authHeader){
 
