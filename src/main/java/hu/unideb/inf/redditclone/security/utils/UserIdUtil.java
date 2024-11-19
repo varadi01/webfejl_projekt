@@ -15,8 +15,8 @@ public class UserIdUtil {
         JwtToUserIdMap.put(token, userId);
     }
 
-    public static void clearRecord(){
-        //TODO
+    public static void clearRecord(String token){
+        JwtToUserIdMap.remove(token);
     }
 
     public static boolean validateUserHasPermission(String authHeader, Long userId){

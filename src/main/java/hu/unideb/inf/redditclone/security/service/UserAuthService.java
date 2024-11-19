@@ -12,6 +12,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 @Service
 public class UserAuthService {
@@ -31,8 +32,6 @@ public class UserAuthService {
 
     private final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(12);
 
-    //TODO
-
     public UserAuthEntity register(UserAuthEntity user) {
         UserAuthEntity eu = repo.findByUsername(user.getUsername());
         if (eu != null) {
@@ -45,7 +44,8 @@ public class UserAuthService {
     }
 
     public String verify(UserAuthEntity user) {
-        Authentication authentication = authManager.authenticate(new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword()));
+        Authentication authentication = authManager.authenticate(
+                new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword()));
         if (authentication.isAuthenticated()) {
             String t = jwtService.generateToken(user.getUsername());
             Long uId = userService.getUserByUsername(user.getUsername()).getId();

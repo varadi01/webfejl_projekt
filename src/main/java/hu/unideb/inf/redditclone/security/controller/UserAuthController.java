@@ -20,10 +20,12 @@ public class UserAuthController {
     @CrossOrigin
     @PostMapping("/register")
     public ResponseEntity<UserAuthEntity> register(@RequestBody UserAuthEntity user) {
+        System.out.println("called");
         UserAuthEntity u = service.register(user);
         if (u == null) {
             return ResponseEntity.badRequest().body(null);
         }
+        System.out.println("user registered with username " + u.getUsername());
         return ResponseEntity.ok().body(u);
     }
 

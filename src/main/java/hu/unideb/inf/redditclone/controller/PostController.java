@@ -47,6 +47,7 @@ public class PostController {
     }
 
     @PostMapping("/")
+    @CrossOrigin
     public ResponseEntity<PostEntity> createPost(@RequestBody PostEntity postEntity,
                                                  @RequestHeader(name = "Authorization") String authHeader) {
 
@@ -64,6 +65,7 @@ public class PostController {
     }
 
     @PutMapping("/update")
+    @CrossOrigin
     public ResponseEntity<PostEntity> updatePost(@RequestBody JsonNode body,
                                                  @RequestHeader(name = "Authorization") String authHeader) {
         long uid = body.get("user_id").asLong();
@@ -102,6 +104,7 @@ public class PostController {
     }
 
     @DeleteMapping("/del")
+    @CrossOrigin
     public ResponseEntity<String> deletePost(@RequestHeader(name = "Authorization") String authHeader,
                                              @RequestBody JsonNode body) {
         long uid = body.get("user_id").asLong();

@@ -1,15 +1,16 @@
 import {useNavigate} from "react-router-dom";
+import {useEffect} from "react";
 
 export default function Root() {
     const navigate = useNavigate()
 
-
+    useEffect(() => {
+        navigate("/login")
+    }, []);
 
     return (
         <div>
-            root
-            {navigate("/login")}
+            <h1>Redirecting...</h1>
         </div>
-
     )
 }

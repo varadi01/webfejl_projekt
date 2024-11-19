@@ -22,7 +22,7 @@ public interface PostRepo extends JpaRepository<PostEntity, Long> {
 
     List<PostEntity> findAllByCreatedAtAfterOrderByCreatedAt(LocalDateTime date);
 
-    List<PostEntity> findAllByCreatedAtAfterOrderByVotes(LocalDateTime date);
+    List<PostEntity> findAllByCreatedAtAfterOrderByVotesDesc(LocalDateTime date);
 
     //List<PostDTO> findFirst50OrderByVotesDesc(); //smth
 

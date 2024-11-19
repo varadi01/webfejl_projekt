@@ -1,0 +1,11 @@
+.comment-thread .p-panel-content {
+    padding: 0;
+    border-bottom: 0;
+    border-right: 0;
+    border-top: 0;
+    border-left: 1;
+}
+.comment-thread .p-panel-header{
+    padding: 0;
+    border: 0;
+}

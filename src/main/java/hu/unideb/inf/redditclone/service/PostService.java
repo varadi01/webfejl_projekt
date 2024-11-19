@@ -29,7 +29,7 @@ public class PostService {
 
     public List<PostEntity> getHotPosts(){
         var lastWeek = LocalDateTime.now().minusWeeks(1);
-        return postRepository.findAllByCreatedAtAfterOrderByVotes(lastWeek);
+        return postRepository.findAllByCreatedAtAfterOrderByVotesDesc(lastWeek);
     }
 
     //get posts by community, get a few at a time

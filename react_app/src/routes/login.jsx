@@ -9,25 +9,10 @@ import { Button } from 'primereact/button';
 import {InputText} from "primereact/inputtext";
 import Cookies from 'js-cookie'
 
-
-
-import { Divider } from 'primereact/divider';
-import { DeferredContent } from 'primereact/deferredcontent'; //MUST USE
-
 import { Image } from 'primereact/image';
-import {Accordion, AccordionTab} from "primereact/accordion";
-import {Menu} from "primereact/menu";
 import React, {useEffect, useRef, useState} from "react";
-import { DataScroller } from 'primereact/datascroller';
-import { Panel } from 'primereact/panel';
-
-import { Chip } from 'primereact/chip';
-import { Tag } from 'primereact/tag';
 import {Card} from "primereact/card";
-import {TabPanel, TabView} from "primereact/tabview";
 import {Link, useNavigate} from "react-router-dom";
-
-
 
 
 const baseUrl = "http://localhost:8080/"
@@ -84,8 +69,6 @@ export default function LoginPage() {
         }
     }
 
-
-
     return (<div className="flex align-items-center justify-content-center p-8">
         {showRegister ? <RegisterPopup toggle={toggleReg}/> :
             <div className="surface-card shadow-2 border-round w-full lg:w-4 p-6">
@@ -117,17 +100,17 @@ export default function LoginPage() {
     </div>)
 }
 
-
 function RegisterPopup(toggleReg) {
     const [usernameReg, setUsernameReg] = useState("")
     const [passwordReg, setPasswordReg] = useState("")
     const [showRegError, setShowRegError] = useState(false)
 
 
-    async function handleRegister(){
-        const res = await fetch("http://localhost:8080/register",{
+    function handleRegister(){
+        const res= fetch("http://localhost:8080/register",{
             headers: {
                 "Content-Type": "application/json",
+                'Access-Control-Allow-Origin': '*'
             },
             method: "POST",
             body: JSON.stringify({
@@ -139,22 +122,26 @@ function RegisterPopup(toggleReg) {
 
     return (
         <div className="flex align-items-center justify-content-center p-6
-                        surface-card shadow-2 border-round">
+                        surface-card shadow-2 border-round w-30rem">
             <div className="w-full vertical-align-middle">
                 <div className="text-900 text-3xl font-medium mb-3 p-3">Registration</div>
                 {showRegError ? <Card title="Username already taken!" className="bg-black-alpha-10 p-0 m-0" >
                     <p className="m-0 p-0">Your given username is already in use, please choose another one!</p>
                 </Card> : null}
-                <label htmlFor="username" className="block text-900 font-medium mb-2">Username</label>
-                <InputText id="username" value={usernameReg} onChange={e => setUsernameReg(e.target.value)}
-                           type="text" placeholder="Email address" className="w-full mb-3"/>
+                <div>
+                    <label htmlFor="username" className="block text-900 font-medium mb-2">Username</label>
+                    <InputText id="username" value={usernameReg} onChange={e => setUsernameReg(e.target.value)}
+                               type="text" placeholder="Email address" className="w-full mb-3"/>
 
-                <label htmlFor="password" className="block text-900 font-medium mb-2">Password</label>
-                <InputText id="password" value={passwordReg} onChange={e => setPasswordReg(e.target.value)}
-                           type="password" placeholder="Password" className="w-full mb-3"/>
-
-                <Button label="Register" icon="pi pi-user" className="w-4" onClick={handleRegister}/>
-                <Button label="Cancel" icon="pi pi-times" className="w-3 " onClick={toggleReg.toggle}/>
+                    <label htmlFor="password" className="block text-900 font-medium mb-2">Password</label>
+                    <InputText id="password" value={passwordReg} onChange={e => setPasswordReg(e.target.value)}
+                               type="password" placeholder="Password" className="w-full mb-3"/>
+                </div>
+                <div className="flex flex-row justify-content-between">
+                    <Button label="Register" icon="pi pi-user"  onClick={() => handleRegister()}/>
+                    <Button label="Cancel" icon="pi pi-times"  onClick={toggleReg.toggle}
+                            severity="danger"/>
+                </div>
             </div>
         </div>
     )
